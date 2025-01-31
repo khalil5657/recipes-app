@@ -223,7 +223,11 @@ app.get("/recipe/:id", async(req, res)=>{
         },
         include:{
             img:true,
-            reviews:true
+            reviews:{
+                include:{
+                    writer:true
+                }
+            }
         }
     })
     res.send(recipe)

@@ -12,6 +12,7 @@ function ShowRecipe(){
     const [stars, setStars] = useState(0)
     const [starsFinal, setStarsFinal] = useState(0)
     const [allow, setAllow] = useState(true)
+    const [reviewsIds, setReviewsIds] = useState([])
     const [update, setUpdate] = useState("")
 
     useEffect(()=>{
@@ -23,6 +24,9 @@ function ShowRecipe(){
                 })
                 const recipe = await rawData.json()
                 setData(recipe)
+                let reviewsIds = []
+                recipe.reviews.map(review=>reviewsIds.push(review.writerid))
+                setReviewsIds(reviewsIds)
                 setLoading(false)
             }
         )()
@@ -42,6 +46,13 @@ function ShowRecipe(){
     }
 
     function showIt(recipe){
+        function showReview(review){
+            return <div className="review">
+                    <h3><span>{review.writer.username}</span> {review.title}</h3>
+                    <p>{review.description}</p>
+                    <div className="fa fa-star" style={{color:"gold"}}>{recipe.rating} Stars </div>
+                </div>
+        }
         function list(item){
             return <li>{item}</li>
         }
@@ -58,7 +69,8 @@ function ShowRecipe(){
                 <ul>
                     {recipe.instructions.map(item=>list(item))}
                 </ul>
-                {recipe.reviews.length}
+                <h2>Reviews:</h2>
+                {recipe.reviews.length>0&&recipe.reviews.map(review=>showReview(review))}
             </div>
     }
 
@@ -99,7 +111,7 @@ function ShowRecipe(){
 
     return <div>
             {showIt(data)}
-            <button onClick={(e)=>handleShowForm(e)}>Add review</button>
+            {!user.username?'':(!reviewsIds.includes(user.id))?<button onClick={(e)=>handleShowForm(e)}>Add review</button>:<div>You Already added a review</div>}
             {showReviewFormState&&
             <form onSubmit={sendReview}>
                 <label htmlFor="">Review Title</label>

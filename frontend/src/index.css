@@ -62,3 +62,9 @@ nav{
 .checked{
   color: orange;
 }
+.review{
+  border: 1px solid black;
+}
+.review h3 span{
+  color: red;
+}

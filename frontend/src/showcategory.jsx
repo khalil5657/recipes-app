@@ -49,7 +49,7 @@ function ShowCategory(){
     return <div>
             <h1>Recipes for {type}</h1>
             {data.length>0?<div className="recipes">{data.map(recipe=>listIt(recipe))}</div>:"no data yet"}
-            <Link to={`/createrecipe/${type}`}>Create a {type} recipe</Link>
+            {user.username&&<Link to={`/createrecipe/${type}`}>Create a {type} recipe</Link>}
             
         </div>
 }
