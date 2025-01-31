@@ -7,23 +7,43 @@ function ShowProfile(){
     const [savedRecipes, setSavedRecipes] = useState([])
     const [createdRecipes, setCreatedRecipes] = useState([])
     const [postedReviews, setPostedReviews] = useState([])
+    const [savedRecipesByStars, setSavedRecipesByStars] = useState([])
+    const [createdRecipesByStars, setCreatedRecipesByStars] = useState([])
+    const [sortBy, setSortBy] = useState("rating")
 
     useEffect(()=>{
         (
             async ()=>{
-                const savedRecipesRaw = await fetch(`${import.meta.env.VITE_FETCH_URL}/savedrecipes/${user.id}`, {
+
+                const savedRecipesRaw = await fetch(`${import.meta.env.VITE_FETCH_URL}/savedrecipes/${user.id}/date`, {
                     method:"GET",
                     headers:{'Content-Type':'application/json'}
                 })
                 const savedRecipes = await savedRecipesRaw.json()
                 setSavedRecipes(savedRecipes)
-
-                const createdRecipesRaw = await fetch(`${import.meta.env.VITE_FETCH_URL}/createdrecipes/${user.id}`, {
+                console.log(savedRecipes)
+                //// the recipes by stars rating
+                const savedRecipesRawByStars = await fetch(`${import.meta.env.VITE_FETCH_URL}/savedrecipes/${user.id}/rating`, {
+                    method:"GET",
+                    headers:{'Content-Type':'application/json'}
+                })
+                const savedRecipesByStars = await savedRecipesRawByStars.json()
+                setSavedRecipesByStars(savedRecipesByStars)
+                console.log(savedRecipesByStars)
+                const createdRecipesRaw = await fetch(`${import.meta.env.VITE_FETCH_URL}/createdrecipes/${user.id}/date`, {
                     method:"GET",
                     headers:{'Content-Type':'application/json'}
                 })
                 const createdRecipes = await createdRecipesRaw.json()
                 setCreatedRecipes(createdRecipes)
+                //// recipes by stars rating
+                const createdRecipesRawByStars = await fetch(`${import.meta.env.VITE_FETCH_URL}/createdrecipes/${user.id}/rating`, {
+                    method:"GET",
+                    headers:{'Content-Type':'application/json'}
+                })
+                const createdRecipesByStars = await createdRecipesRawByStars.json()
+                setCreatedRecipesByStars(createdRecipesByStars)
+
 
                 const postedReviewsRaw = await fetch(`${import.meta.env.VITE_FETCH_URL}/postedreviews/${user.id}`, {
                     method:"GET",
@@ -55,13 +75,23 @@ function ShowProfile(){
     if (loading){
         return <h1>Loading...</h1>
     }
+    // if (sortBy=="date"){
+    //     alert(savedRecipesByStars[0].title)
+    // }else{
+    //     alert(savedRecipes[0].title)
+    // }
+
     return <div>
         <h1>{user.username}</h1>
         {user.img?<img src={user.img.url}/>:<img src="https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg"/>}
         <h3>Saved recipes:</h3>
-        {savedRecipes.length>0?<div className="recipes">{savedRecipes.map(recipe=>listRecipe(recipe))}</div>:<div>No saved recipes</div>}
+        <div className="sorting">Sort by:
+            <div onClick={()=>setSortBy("rating")}>Rating</div>
+            <div onClick={()=>setSortBy("date")}>Date</div>
+        </div>
+        {savedRecipesByStars.length>0?<div className="recipes">{sortBy=="date"?savedRecipes.map(recipe=>listRecipe(recipe)):savedRecipesByStars.map(recipe=>listRecipe(recipe))}</div>:<div>No saved recipes</div>}
         <h3>Created recipes:</h3>
-        {createdRecipes.length>0?<div className="recipes">{createdRecipes.map(recipe=>listRecipe(recipe))}</div>:<div>No created recipes</div>}
+        {createdRecipesByStars.length>0?<div className="recipes">{sortBy=="date"?createdRecipes.map(recipe=>listRecipe(recipe)):createdRecipesByStars.map(recipe=>listRecipe(recipe))}</div>:<div>No created recipes</div>}
         <h3>Posted Reviews:</h3>
         {postedReviews.length>0?postedReviews.map(review=>listReview(review)):<div>No Posted Reviews</div>}
 

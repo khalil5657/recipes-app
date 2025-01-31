@@ -77,3 +77,13 @@ nav{
   height: 45px;
   width: 45px;
 }
+.sorting{
+  width: max-content;
+  height: 65px;
+}
+.sorting div{
+  display: none;
+}
+.sorting:hover div{
+  display: block;
+}

@@ -289,31 +289,64 @@ app.get("/recipes", async(req, res)=>{
     res.send(recipes)
 })
 
-app.get("/savedrecipes/:id", async(req, res)=>{
-
-    const recipes = await prisma.recipe.findMany({
-        where:{
-            userswhosaved:{
-                has:req.params.id
+app.get("/savedrecipes/:id/:by", async(req, res)=>{
+    if (req.params.by=="date"){
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                userswhosaved:{
+                    has:req.params.id
+                }
+            },
+            include:{
+                img:true
             }
-        },
-        include:{
-            img:true
-        }
-    })
-    res.send(recipes)
+        })
+        res.send(recipes)
+    }else if (req.params.by=="rating"){
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                userswhosaved:{
+                    has:req.params.id
+                }
+            },
+            include:{
+                img:true
+            },
+            orderBy:{
+                rating:"desc"
+            }
+        })
+        res.send(recipes)
+    }
+    
 })
 
-app.get("/createdrecipes/:id", async(req, res)=>{
-    const recipes = await prisma.recipe.findMany({
-        where:{
-            writerid:req.params.id
-        },
-        include:{
-            img:true
-        }
-    })
-    res.send(recipes)
+app.get("/createdrecipes/:id/:by", async(req, res)=>{
+    if (req.params.by=="date"){
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                writerid:req.params.id
+            },
+            include:{
+                img:true
+            }
+        })
+        res.send(recipes)
+    }else{
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                writerid:req.params.id
+            },
+            include:{
+                img:true
+            },
+            orderBy:{
+                rating:"desc"
+            }
+        })
+        res.send(recipes)
+    }
+    
 })
 
 app.get("/postedreviews/:id", async(req, res)=>{
@@ -359,4 +392,21 @@ app.delete("/deletesavedrecipe", async(req, res)=>{
     })
     res.status(200).json({message:"success"})
 })
+
+app.get("/search/:word", async(req, res)=>{
+    const recipes = await prisma.recipe.findMany({
+        where:{
+            title:{
+                contains:req.params.word,
+                mode:"insensitive"
+            }
+        },
+        include:{
+            img:true
+        }
+    })
+    console.log(recipes)
+    res.send(recipes)
+})
+
 app.listen(3000)
