@@ -289,4 +289,74 @@ app.get("/recipes", async(req, res)=>{
     res.send(recipes)
 })
 
+app.get("/savedrecipes/:id", async(req, res)=>{
+
+    const recipes = await prisma.recipe.findMany({
+        where:{
+            userswhosaved:{
+                has:req.params.id
+            }
+        },
+        include:{
+            img:true
+        }
+    })
+    res.send(recipes)
+})
+
+app.get("/createdrecipes/:id", async(req, res)=>{
+    const recipes = await prisma.recipe.findMany({
+        where:{
+            writerid:req.params.id
+        },
+        include:{
+            img:true
+        }
+    })
+    res.send(recipes)
+})
+
+app.get("/postedreviews/:id", async(req, res)=>{
+    const postedReviews = await prisma.review.findMany({
+        where:{
+            writerid:req.params.id
+        },
+        include:{
+            writer:true
+        }
+    })
+    res.send(postedReviews)
+})
+
+app.post("/saverecipe", async(req, res)=>{
+    await prisma.recipe.update({
+        where:{
+            id:req.body.recipeid
+        },
+        data:{
+            userswhosaved:{
+                push:req.body.userid
+            }
+        },
+    })
+    res.status(200).json({message:"success"})
+})
+
+app.delete("/deletesavedrecipe", async(req, res)=>{
+    const old = await prisma.recipe.findUnique({
+        where:{
+            id:req.body.recipeid
+        }
+    })
+    let newOne = old.userswhosaved.filter(id=>id!=req.body.userid)
+    await prisma.recipe.update({
+        where:{
+            id:req.body.recipeid
+        },
+        data:{
+            userswhosaved:newOne
+        }
+    })
+    res.status(200).json({message:"success"})
+})
 app.listen(3000)

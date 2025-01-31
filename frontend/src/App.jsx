@@ -8,6 +8,7 @@ import Login from './login'
 import ShowCategory from './showcategory'
 import CreateRecipe from './createrecipe'
 import ShowRecipe from './showrecipe'
+import ShowProfile from './showprofile'
 
 function RootLayout(){
   const [user, setUser] = useState("")
@@ -60,7 +61,7 @@ function RootLayout(){
             </div>
             <input type="text" placeholder='search'/>
             {!user&&<div><Link to="/login">Login</Link><Link to="/signup">Signup</Link></div>}
-            {user&&<div>{user.username} {user.id=="a123170a-59c4-412f-b803-ddb539deb658"&&'Admin'}<button onClick={logOut}>Logout</button></div>}
+            {user&&<div><Link className='Link' to="/showprofile">{user.im?<img src={user.img.url} className='profile-img'/>:<img src='https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg' className='profile-img'/>}{user.username} {user.id=="a123170a-59c4-412f-b803-ddb539deb658"&&'Admin'}</Link><button onClick={logOut}>Logout</button></div>}
           </nav>
           <Outlet context={[user, setUser]}/>
       </div>
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
       {
         path:"/createrecipe/:type",
         element:<CreateRecipe />
+      },
+      {
+        path:"/showprofile",
+        element:<ShowProfile />
       },
       
     ] 

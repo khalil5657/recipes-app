@@ -44,6 +44,7 @@ model Recipe {
   rating Int?
   reviews Review[]
   category String
+  userswhosaved String[]
 }
 
 model RecipeImage {

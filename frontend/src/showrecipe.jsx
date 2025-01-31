@@ -41,8 +41,28 @@ function ShowRecipe(){
         }
     }
 
-    function postIt(e){
-        e.preventDefault()
+    async function saveRecipe(){
+        await fetch(`${import.meta.env.VITE_FETCH_URL}/saverecipe`, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({
+                userid:user.id,
+                recipeid:id
+              })
+        })
+        setUpdate({})
+    }
+
+    async function deleteSavedRecipe(){
+        await fetch(`${import.meta.env.VITE_FETCH_URL}/deletesavedrecipe`, {
+            method:"DELETE",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({
+                userid:user.id,
+                recipeid:id
+              })
+        })
+        setUpdate({})
     }
 
     function showIt(recipe){
@@ -50,7 +70,7 @@ function ShowRecipe(){
             return <div className="review">
                     <h3><span>{review.writer.username}</span> {review.title}</h3>
                     <p>{review.description}</p>
-                    <div className="fa fa-star" style={{color:"gold"}}>{recipe.rating} Stars </div>
+                    <div className="fa fa-star" style={{color:"gold"}}>{review.rating} Stars </div>
                 </div>
         }
         function list(item){
@@ -58,6 +78,7 @@ function ShowRecipe(){
         }
         return <div >
                 <h2>{recipe.title}</h2>
+                {!recipe.userswhosaved.includes(user.id)?<button onClick={()=>saveRecipe()}>Save the Recipe</button>:<button onClick={()=>deleteSavedRecipe()}>remove from saved</button>}
                 {recipe.img&&<div><img src={recipe.img.url}/></div>}
                 <p>{recipe.description}</p>
                 {recipe.rating?<div className="fa fa-star" style={{color:"gold"}}>{recipe.rating} Stars </div>:<div>no rating yet</div>}
