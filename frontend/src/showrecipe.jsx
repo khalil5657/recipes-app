@@ -103,6 +103,7 @@ function ShowRecipe(){
                 recipeid:data.id
               })
         })
+        setShowReviewFormState(false)
         setUpdate({})
     }
     if (loading){

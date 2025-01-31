@@ -68,3 +68,8 @@ nav{
 .review h3 span{
   color: red;
 }
+.homerecipes{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 50px;
+}

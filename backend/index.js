@@ -266,4 +266,27 @@ app.post("/review", async(req, res)=>{
     res.status(200).json({message:"success"})
 })
 
+app.get("/recipes", async(req, res)=>{
+    const recipesRaw = await prisma.recipe.findMany({
+        include:{
+            img:true,
+            reviews:true
+        }
+    })
+    const recipes = []
+    while (recipes.length<4){
+        let times = 0
+        const randomElement = recipesRaw[Math.floor(Math.random() * recipesRaw.length)];
+        for (let item of recipes){
+            if (item.id==randomElement.id){
+                times++
+            }
+        }
+        if (times==0){
+            recipes.push(randomElement)
+        }
+    }
+    res.send(recipes)
+})
+
 app.listen(3000)
