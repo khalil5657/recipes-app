@@ -222,10 +222,44 @@ app.get("/recipe/:id", async(req, res)=>{
             id:req.params.id
         },
         include:{
-            img:true
+            img:true,
+            reviews:true
         }
     })
     res.send(recipe)
+})
+
+app.post("/review", async(req, res)=>{
+    /// create review 
+    await prisma.review.create({
+        data:{
+            title:req.body.title,
+            description:req.body.description,
+            rating:Number(req.body.rating),
+            writerid:req.body.writerid,
+            recipeid:req.body.recipeid
+        }
+    })
+    /// get all recipe reviews to count the ratings
+    const recipeReviews = await prisma.review.findMany({
+        where:{
+            recipeid:req.body.recipeid
+        }
+    })
+    let ratings = recipeReviews.map(review=>review.rating)
+    /// divition of sum of rating by number of reviews to get rating
+    let sum = ratings.reduce( (acc,e ) => acc + e , 0)
+    let recipeRating = Number(parseFloat(sum/ratings.length).toFixed(2))
+    /// add rating to recipe
+    await prisma.recipe.update({
+        where:{
+            id:req.body.recipeid
+        },
+        data:{
+            rating:recipeRating
+        }
+    })
+    res.status(200).json({message:"success"})
 })
 
 app.listen(3000)

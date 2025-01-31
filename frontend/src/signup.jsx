@@ -35,7 +35,7 @@ function SignUp(){
     async function signUp(e){
         e.preventDefault()
 
-        const res = await fetch(`${import.meta.env.VITE_FETCH_URL}`, {
+        const res = await fetch(`${import.meta.env.VITE_FETCH_URL}/signup`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

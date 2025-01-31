@@ -12,6 +12,7 @@ function ShowRecipe(){
     const [stars, setStars] = useState(0)
     const [starsFinal, setStarsFinal] = useState(0)
     const [allow, setAllow] = useState(true)
+    const [update, setUpdate] = useState("")
 
     useEffect(()=>{
         (
@@ -25,7 +26,7 @@ function ShowRecipe(){
                 setLoading(false)
             }
         )()
-    }, [type])
+    }, [type, update])
 
     function handleShowForm(e){
         e.preventDefault()
@@ -48,7 +49,7 @@ function ShowRecipe(){
                 <h2>{recipe.title}</h2>
                 {recipe.img&&<div><img src={recipe.img.url}/></div>}
                 <p>{recipe.description}</p>
-                {recipe.rating?<div>{recipe.rating}</div>:<div>no rating yet</div>}
+                {recipe.rating?<div className="fa fa-star" style={{color:"gold"}}>{recipe.rating} Stars </div>:<div>no rating yet</div>}
                 <h2>Ingredients:</h2>
                 <ul>
                     {recipe.ingredients.map(item=>list(item))}
@@ -57,6 +58,7 @@ function ShowRecipe(){
                 <ul>
                     {recipe.instructions.map(item=>list(item))}
                 </ul>
+                {recipe.reviews.length}
             </div>
     }
 
@@ -72,12 +74,25 @@ function ShowRecipe(){
             setAllow(false)
         }else{
             setStarsFinal(0)
-            setStars(0)
             setAllow(true)
         }
         
     }
-
+    async function sendReview(e) {
+        e.preventDefault()
+        await fetch(`${import.meta.env.VITE_FETCH_URL}/review`, {
+            method:"POST",
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                title:reviewTitle,
+                description:reviewDescription,
+                rating:starsFinal,
+                writerid:user.id,
+                recipeid:data.id
+              })
+        })
+        setUpdate({})
+    }
     if (loading){
         return <h1>Loading...</h1>
     }
@@ -86,7 +101,7 @@ function ShowRecipe(){
             {showIt(data)}
             <button onClick={(e)=>handleShowForm(e)}>Add review</button>
             {showReviewFormState&&
-            <form onSubmit={postIt}>
+            <form onSubmit={sendReview}>
                 <label htmlFor="">Review Title</label>
                 <input type="text" value={reviewTitle} onChange={(e)=>setReviewTitle(e.target.value)}/>
                 <label htmlFor="">review description</label>
