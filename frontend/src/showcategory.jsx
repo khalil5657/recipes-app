@@ -6,17 +6,27 @@ function ShowCategory(){
     const {type } = useParams()
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState("")
-
+    const [sortBy, setSortBy] = useState("rating")
+    const [dataByRating, setDataByRating] = useState([])
+    const [dataByDate, setDataBydate] = useState([])
 
     useEffect(()=>{
         (
             async ()=>{
-                const rawData = await fetch(`${import.meta.env.VITE_FETCH_URL}/${type}/recipes`, {
+                const rawData = await fetch(`${import.meta.env.VITE_FETCH_URL}/${type}/recipes/rating`, {
                     method:"GET",
                     headers:{'Content-Type': 'application/json'}
                 })
                 const recipes = await rawData.json()
-                setData(recipes.recipes)
+                setDataByRating(recipes.recipes)
+
+                const rawDataByDate = await fetch(`${import.meta.env.VITE_FETCH_URL}/${type}/recipes/date`, {
+                    method:"GET",
+                    headers:{'Content-Type': 'application/json'}
+                })
+                const recipesByDate = await rawDataByDate.json()
+                setDataBydate(recipesByDate.recipes)
+
                 setLoading(false)
             }
         )()
@@ -29,16 +39,7 @@ function ShowCategory(){
         return <Link className="Link recipe" to={`/showcategory/${type}/recipe/${recipe.id}`}>
                 <h2>{recipe.title}</h2>
                 {recipe.img&&<div><img src={recipe.img.url}/></div>}
-                {/* <p>{recipe.description}</p> */}
                 {recipe.rating?<div>{recipe.rating}</div>:<div>no rating yet</div>}
-                {/* <h2>Ingredients:</h2>
-                <ul>
-                    {recipe.ingredients.map(item=>list(item))}
-                </ul>
-                <h2>instructions:</h2>
-                <ul>
-                    {recipe.instructions.map(item=>list(item))}
-                </ul> */}
             </Link>
     }
 
@@ -48,7 +49,11 @@ function ShowCategory(){
 
     return <div>
             <h1>Recipes for {type}</h1>
-            {data.length>0?<div className="recipes">{data.map(recipe=>listIt(recipe))}</div>:"no data yet"}
+            <div className="sorting">Sort by:
+                <div onClick={()=>setSortBy("rating")}>Rating {sortBy=="rating"&&<span>✓</span>}</div>
+                <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>
+            </div>
+            {dataByDate.length>0?<div className="recipes">{sortBy=="rating"?dataByRating.map(recipe=>listIt(recipe)):dataByDate.map(recipe=>listIt(recipe))}</div>:"no data yet"}
             {user.username&&<Link to={`/createrecipe/${type}`}>Create a {type} recipe</Link>}
             
         </div>

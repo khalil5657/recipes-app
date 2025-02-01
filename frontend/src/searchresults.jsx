@@ -6,17 +6,29 @@ function ShowSearchResults(){
     const {state} = useLocation()
     const [data, setData] = useState("")
     const [loading, setLoading] = useState(true)
+    const [sortBy, setSortBy] = useState("rating")
+    const [dataByRating, setDataByRating] = useState([])
+    const [dataByDate, setDataBydate] = useState([])
 
     useEffect(()=>{
         (
             async ()=>{
                 console.log(state.value)
-                const recipesRaw = await fetch(`${import.meta.env.VITE_FETCH_URL}/search/${state.value}`, {
+                const recipesRaw = await fetch(`${import.meta.env.VITE_FETCH_URL}/search/${state.value}/rating`, {
                     method:"GET",
                     headers:{"Content-Type":"application/json"}
                 })
                 const recipes = await recipesRaw.json()
-                setData(recipes)
+                setDataByRating(recipes)
+
+                const recipesRawByDate = await fetch(`${import.meta.env.VITE_FETCH_URL}/search/${state.value}/date`, {
+                    method:"GET",
+                    headers:{"Content-Type":"application/json"}
+                })
+                const recipesByDate = await recipesRawByDate.json()
+                setDataBydate(recipesByDate)
+
+
                 setLoading(false)
             }
         )()
@@ -35,7 +47,12 @@ function ShowSearchResults(){
     }
 
     return <div>
-        {data.length>0?<div className="recipes">{data.map(recipe=>listRecipe(recipe))}</div>:<div>No results for: </div>}
+            <div className="sorting">Sort by:
+                <div onClick={()=>setSortBy("rating")}>Rating {sortBy=="rating"&&<span>✓</span>}</div>
+                <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>
+            </div>
+            {dataByDate.length>0?<div className="recipes">{sortBy=="rating"?dataByRating.map(recipe=>listRecipe(recipe)):dataByDate.map(recipe=>listRecipe(recipe))}</div>:<div>No results for: {state.value}</div>}
+        {/* {data.length>0?<div className="recipes">{data.map(recipe=>listRecipe(recipe))}</div>:<div>No results for: </div>} */}
         </div>
 }
 

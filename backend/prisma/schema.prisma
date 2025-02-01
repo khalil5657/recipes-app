@@ -33,6 +33,7 @@ model UserImage {
 
 model Recipe {
   id String @id @default(uuid())
+  posteddate DateTime @default(now())
   title String
   description String
   ingredients String[]
@@ -41,7 +42,7 @@ model Recipe {
   img RecipeImage?
   writer User @relation(fields: [writerid], references: [id])
   writerid String
-  rating Int?
+  rating Float?
   reviews Review[]
   category String
   userswhosaved String[]
@@ -57,6 +58,7 @@ model RecipeImage {
 
 model Review {
   id String @id @default(uuid())
+  posteddate DateTime @default(now())
   title String
   description String
   rating Int

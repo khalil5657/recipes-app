@@ -151,22 +151,55 @@ app.get("/user", async(req, res)=>{
     }
 })
 
-app.get("/:type/recipes", async(req, res)=>{
-    const recipes = await prisma.recipe.findMany({
-        where:{
-            category:req.params.type
-        },
-        include:{
-            img:true,
-            reviews:true,
-            writer:{
-                include:{
-                    img:true
+app.get("/:type/recipes/:mode", async(req, res)=>{
+    if (req.params.mode=="rating"){
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                category:req.params.type
+            },
+            include:{
+                img:true,
+                reviews:{
+                    orderBy:{
+                        posteddate:"desc"
+                    }
+                },
+                writer:{
+                    include:{
+                        img:true
+                    }
                 }
+            },
+            orderBy:{
+                rating:"desc"
             }
-        }
-    })
-    res.status(200).json({recipes:recipes})
+        })
+        res.status(200).json({recipes:recipes})
+    }else{
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                category:req.params.type
+            },
+            include:{
+                img:true,
+                reviews:{
+                    orderBy:{
+                        posteddate:"desc"
+                    }
+                },
+                writer:{
+                    include:{
+                        img:true
+                    }
+                }
+            },
+            orderBy:{
+                posteddate:"desc"
+            }
+        })
+        res.status(200).json({recipes:recipes})
+    }
+    
 })
 
 app.post("/recipe/:type", async(req, res)=>{
@@ -226,6 +259,9 @@ app.get("/recipe/:id", async(req, res)=>{
             reviews:{
                 include:{
                     writer:true
+                },
+                orderBy:{
+                    posteddate:"desc"
                 }
             }
         }
@@ -270,7 +306,11 @@ app.get("/recipes", async(req, res)=>{
     const recipesRaw = await prisma.recipe.findMany({
         include:{
             img:true,
-            reviews:true
+            reviews:{
+                orderBy:{
+                    posteddate:"desc"
+                }
+            }
         }
     })
     const recipes = []
@@ -299,6 +339,9 @@ app.get("/savedrecipes/:id/:by", async(req, res)=>{
             },
             include:{
                 img:true
+            },
+            orderBy:{
+                posteddate:"desc"
             }
         })
         res.send(recipes)
@@ -316,6 +359,9 @@ app.get("/savedrecipes/:id/:by", async(req, res)=>{
                 rating:"desc"
             }
         })
+        // const aa = await prisma.review.findMany({
+
+        // })
         res.send(recipes)
     }
     
@@ -356,6 +402,9 @@ app.get("/postedreviews/:id", async(req, res)=>{
         },
         include:{
             writer:true
+        },
+        orderBy:{
+            posteddate:"desc"
         }
     })
     res.send(postedReviews)
@@ -393,7 +442,8 @@ app.delete("/deletesavedrecipe", async(req, res)=>{
     res.status(200).json({message:"success"})
 })
 
-app.get("/search/:word", async(req, res)=>{
+app.get("/search/:word/:mode", async(req, res)=>{
+    if (req.params.mode=="rating"){
     const recipes = await prisma.recipe.findMany({
         where:{
             title:{
@@ -403,10 +453,29 @@ app.get("/search/:word", async(req, res)=>{
         },
         include:{
             img:true
+        },
+        orderBy:{
+            rating:"desc"
         }
     })
-    console.log(recipes)
     res.send(recipes)
+    }else{
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                title:{
+                    contains:req.params.word,
+                    mode:"insensitive"
+                }
+            },
+            include:{
+                img:true
+            },
+            orderBy:{
+                posteddate:"desc"
+            }
+        })
+        res.send(recipes)
+    }
 })
 
 app.listen(3000)

@@ -84,11 +84,11 @@ function ShowProfile(){
     return <div>
         <h1>{user.username}</h1>
         {user.img?<img src={user.img.url}/>:<img src="https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg"/>}
-        <h3>Saved recipes:</h3>
         <div className="sorting">Sort by:
-            <div onClick={()=>setSortBy("rating")}>Rating</div>
-            <div onClick={()=>setSortBy("date")}>Date</div>
+            <div onClick={()=>setSortBy("rating")}>Rating {sortBy=="rating"&&<span>✓</span>}</div>
+            <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>
         </div>
+        <h3>Saved recipes:</h3>
         {savedRecipesByStars.length>0?<div className="recipes">{sortBy=="date"?savedRecipes.map(recipe=>listRecipe(recipe)):savedRecipesByStars.map(recipe=>listRecipe(recipe))}</div>:<div>No saved recipes</div>}
         <h3>Created recipes:</h3>
         {createdRecipesByStars.length>0?<div className="recipes">{sortBy=="date"?createdRecipes.map(recipe=>listRecipe(recipe)):createdRecipesByStars.map(recipe=>listRecipe(recipe))}</div>:<div>No created recipes</div>}
