@@ -363,6 +363,21 @@ app.get("/savedrecipes/:id/:by", async(req, res)=>{
 
         // })
         res.send(recipes)
+    }else{
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                userswhosaved:{
+                    has:req.params.id
+                }
+            },
+            include:{
+                img:true
+            },
+            orderBy:{
+                nutvalue:"desc"
+            }
+        })
+        res.send(recipes)
     }
     
 })
@@ -378,7 +393,7 @@ app.get("/createdrecipes/:id/:by", async(req, res)=>{
             }
         })
         res.send(recipes)
-    }else{
+    }else if (req.params.by=="rating"){
         const recipes = await prisma.recipe.findMany({
             where:{
                 writerid:req.params.id
@@ -388,6 +403,19 @@ app.get("/createdrecipes/:id/:by", async(req, res)=>{
             },
             orderBy:{
                 rating:"desc"
+            }
+        })
+        res.send(recipes)
+    }else{
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                writerid:req.params.id
+            },
+            include:{
+                img:true
+            },
+            orderBy:{
+                nutvalue:"desc"
             }
         })
         res.send(recipes)
@@ -459,7 +487,7 @@ app.get("/search/:word/:mode", async(req, res)=>{
         }
     })
     res.send(recipes)
-    }else{
+    }else if (req.params.mode=="date"){
         const recipes = await prisma.recipe.findMany({
             where:{
                 title:{
@@ -472,6 +500,22 @@ app.get("/search/:word/:mode", async(req, res)=>{
             },
             orderBy:{
                 posteddate:"desc"
+            }
+        })
+        res.send(recipes)
+    }else{
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                title:{
+                    contains:req.params.word,
+                    mode:"insensitive"
+                }
+            },
+            include:{
+                img:true
+            },
+            orderBy:{
+                nutvalue:"desc"
             }
         })
         res.send(recipes)
