@@ -23,12 +23,12 @@ function EditRecipe(){
 
     const [listOfIngredients, setListOfIngredients] = useState(state?state.recipe.ingredients:'')
     const [listOfInstructions, setListOfInstructions] = useState(state?state.recipe.instructions:'')
-    // const [showAddIngField, setShowAddIngField] = useState(false)
-    const [showAddInstField, setShowAddInstField] = useState(false)
+
     // show input to edit old one
     const [showEditIngField, setShowEditIngField] = useState('n')
     const [showEditInsField, setShowEditInsField] = useState('n')
 
+    const [oldImgUrl, setOldImgUrl] = useState(state?state.recipe.img.url:"")
     const [file, setFile] = useState("")
 
     function handleInstState(e){
@@ -67,10 +67,10 @@ function EditRecipe(){
         setNewInstruction("")
     }
 
-    async function addRecipe(e){
+    async function updateRecipe(e){
         e.preventDefault()
-        const rawData = await fetch(`${import.meta.env.VITE_FETCH_URL}/recipe/${type}`, {
-            method:"POST",
+        const rawData = await fetch(`${import.meta.env.VITE_FETCH_URL}/editrecipe/${id}`, {
+            method:"PUT",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 title,
@@ -87,7 +87,7 @@ function EditRecipe(){
             const theFile = file;
             const formData = new FormData();
             formData.append('image', theFile);
-            const raw = await fetch(`${import.meta.env.VITE_FETCH_URL}/addrecipeimage/`+data.id, {
+            const raw = await fetch(`${import.meta.env.VITE_FETCH_URL}/editrecipeimage/`+data.id, {
             method: 'POST',
             body:formData
         })
@@ -156,10 +156,10 @@ function EditRecipe(){
     }
 
     return <div>
-            <form action="" onSubmit={addRecipe} encType="multipart/form-data">
+            <form action="" onSubmit={updateRecipe} encType="multipart/form-data">
                 <label htmlFor="">title</label>
                 <input type="text"  value={title} onChange={(e)=>setTitle(e.target.value)}/>
-                <img src={state.recipe.img.url}/>
+                <img src={oldImgUrl}/>
                 <label htmlFor="">description</label>
                 <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)}></textarea>
                 <label htmlFor="">image</label>

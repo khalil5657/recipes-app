@@ -109,7 +109,7 @@ const router = createBrowserRouter([
         element:<ShowSearchResults />
       },
       {
-        path:"/editrecipe/:recipe",
+        path:"/editrecipe/:id",
         element:<EditRecipe />
       },
     ] 

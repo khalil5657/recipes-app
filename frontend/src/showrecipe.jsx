@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useOutletContext, useParams } from "react-router"
+import { Link, useNavigate, useOutletContext, useParams } from "react-router"
 
 function ShowRecipe(){
     const [user, setUser] = useOutletContext()
@@ -14,6 +14,7 @@ function ShowRecipe(){
     const [allow, setAllow] = useState(true)
     const [reviewsIds, setReviewsIds] = useState([])
     const [update, setUpdate] = useState("")
+    const navigate =  useNavigate()
 
     useEffect(()=>{
         (
@@ -91,6 +92,8 @@ function ShowRecipe(){
                     {recipe.instructions.map(item=>list(item))}
                 </ul>
                 {recipe.writerid==user.id&&<Link to={`/editrecipe/${recipe.id}`} state={{recipe:recipe}}>Edit</Link>}
+                {recipe.writerid==user.id&&<button onClick={(e)=>deleteRecipe(e, recipe)}>Delete</button>}
+
                 <h2>Reviews:</h2>
                 {recipe.reviews.length>0&&recipe.reviews.map(review=>showReview(review))}
             </div>
@@ -130,6 +133,15 @@ function ShowRecipe(){
     }
     if (loading){
         return <h1>Loading...</h1>
+    }
+
+    async function deleteRecipe(e, recipe){
+        e.preventDefault()
+        await fetch(`${import.meta.env.VITE_FETCH_URL}/deleterecipe/${recipe.id}`, {
+            method:"DELETE",
+            headers:{"Content-Type":"application/json"},
+        })
+        return navigate("/")
     }
 
     return <div>

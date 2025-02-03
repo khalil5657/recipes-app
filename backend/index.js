@@ -553,7 +553,7 @@ app.put("/editrecipe/:id", async(req, res)=>{
         data:{
             title:req.body.title,
             description:req.body.description,
-            nutvalue:req.body.nutvalue,
+            nutvalue:Number(req.body.nutvalue),
             ingredients:req.body.ingredients,
             instructions:req.body.instructions
         }
@@ -597,6 +597,20 @@ app.post("/editrecipeimage/:id", upload.single("image"), async(req, res)=>{
     }catch(error){
       res.send({message:'unsucsessfull'})
     }
+})
+
+app.delete("/deleterecipe/:id", async(req, res)=>{
+    await prisma.recipeImage.delete({
+        where:{
+            recipeid:req.params.id
+        }
+    })
+    await prisma.recipe.delete({
+        where:{
+            id:req.params.id
+        }
+    })
+    res.status(200).json({message:"success"})
 })
 
 app.listen(3000)
