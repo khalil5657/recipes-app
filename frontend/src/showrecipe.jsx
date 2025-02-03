@@ -78,7 +78,7 @@ function ShowRecipe(){
         }
         return <div >
                 <h2>{recipe.title}</h2>
-                {!recipe.userswhosaved.includes(user.id)?<button onClick={()=>saveRecipe()}>Save the Recipe</button>:<button onClick={()=>deleteSavedRecipe()}>remove from saved</button>}
+                {!user.username?'':!recipe.userswhosaved.includes(user.id)?<button onClick={()=>saveRecipe()}>Save the Recipe</button>:<button onClick={()=>deleteSavedRecipe()}>remove from saved</button>}
                 {recipe.img&&<div><img src={recipe.img.url}/></div>}
                 <p>{recipe.description}</p>
                 {recipe.rating?<div className="fa fa-star" style={{color:"gold"}}>{recipe.rating} Stars </div>:<div>no rating yet</div>}
@@ -90,6 +90,7 @@ function ShowRecipe(){
                 <ul>
                     {recipe.instructions.map(item=>list(item))}
                 </ul>
+                {recipe.writerid==user.id&&<Link to={`/editrecipe/${recipe.id}`} state={{recipe:recipe}}>Edit</Link>}
                 <h2>Reviews:</h2>
                 {recipe.reviews.length>0&&recipe.reviews.map(review=>showReview(review))}
             </div>

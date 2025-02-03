@@ -175,7 +175,7 @@ app.get("/:type/recipes/:mode", async(req, res)=>{
             }
         })
         res.status(200).json({recipes:recipes})
-    }else{
+    }else if (req.params.mode=="date"){
         const recipes = await prisma.recipe.findMany({
             where:{
                 category:req.params.type
@@ -195,6 +195,29 @@ app.get("/:type/recipes/:mode", async(req, res)=>{
             },
             orderBy:{
                 posteddate:"desc"
+            }
+        })
+        res.status(200).json({recipes:recipes})
+    }else{
+        const recipes = await prisma.recipe.findMany({
+            where:{
+                category:req.params.type
+            },
+            include:{
+                img:true,
+                reviews:{
+                    orderBy:{
+                        posteddate:"desc"
+                    }
+                },
+                writer:{
+                    include:{
+                        img:true
+                    }
+                }
+            },
+            orderBy:{
+                nutvalue:"desc"
             }
         })
         res.status(200).json({recipes:recipes})
@@ -519,6 +542,60 @@ app.get("/search/:word/:mode", async(req, res)=>{
             }
         })
         res.send(recipes)
+    }
+})
+
+app.put("/editrecipe/:id", async(req, res)=>{
+    const recipe = await prisma.recipe.update({
+        where:{
+            id:req.params.id
+        },
+        data:{
+            title:req.body.title,
+            description:req.body.description,
+            nutvalue:req.body.nutvalue,
+            ingredients:req.body.ingredients,
+            instructions:req.body.instructions
+        }
+    })
+    res.send(recipe)
+})
+
+app.post("/editrecipeimage/:id", upload.single("image"), async(req, res)=>{
+    const { originalname, size, path } = req.file;
+    try{
+        cloudinary.config({
+            cloud_name: process.env.CLOUD_NAME,
+            api_key: process.env.API_KEY,
+            api_secret :process.env.API_SECRET
+        });
+        const results = await cloudinary.uploader.upload(path, {resource_type: 'auto'})
+        //// delete old
+
+        await prisma.recipeImage.delete({
+            where:{
+                recipeid:req.params.id
+            }
+        })
+        const recipe = await prisma.recipe.update({
+            where:{
+                id: req.params.id
+            },
+            data:{
+                img:{
+                create:{
+                    name: originalname,
+                    url: results.secure_url
+                }
+                }
+            }
+        })
+    // Clear temporary local download
+    fs.unlinkSync(path);
+    res.send({message:"success"})
+
+    }catch(error){
+      res.send({message:'unsucsessfull'})
     }
 })
 

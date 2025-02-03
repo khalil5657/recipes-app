@@ -10,6 +10,7 @@ import CreateRecipe from './createrecipe'
 import ShowRecipe from './showrecipe'
 import ShowProfile from './showprofile'
 import ShowSearchResults from './searchresults'
+import EditRecipe from './editrecipe'
 
 function RootLayout(){
   const [user, setUser] = useState("")
@@ -107,7 +108,10 @@ const router = createBrowserRouter([
         path:"/searchresults",
         element:<ShowSearchResults />
       },
-      
+      {
+        path:"/editrecipe/:recipe",
+        element:<EditRecipe />
+      },
     ] 
   }
 ])

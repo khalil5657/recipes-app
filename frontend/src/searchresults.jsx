@@ -47,7 +47,6 @@ function ShowSearchResults(){
                 <h2>{recipe.title} <span>{recipe.nutvalue}c</span></h2>
                 {recipe.img&&<div><img src={recipe.img.url}/></div>}
                 {recipe.rating?<div>{recipe.rating}</div>:<div>no rating yet</div>}
-                {recipe.nutvalue}
             </Link>
     }
 
@@ -61,8 +60,7 @@ function ShowSearchResults(){
                 <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>
                 <div onClick={()=>setSortBy("calories")}>Calories{sortBy=="calories"&&<span>✓</span>}</div>
             </div>
-            {dataByDate.length>0?<div className="recipes">{sortBy=="rating"?dataByRating.map(recipe=>listRecipe(recipe)):dataByDate.map(recipe=>listRecipe(recipe))}</div>:<div>No results for: {state.value}</div>}
-        {/* {data.length>0?<div className="recipes">{data.map(recipe=>listRecipe(recipe))}</div>:<div>No results for: </div>} */}
+            {dataByDate.length>0?<div className="recipes">{sortBy=="rating"?dataByRating.map(recipe=>listRecipe(recipe)):sortBy=="date"?dataByDate.map(recipe=>listRecipe(recipe)):dataByCal.map(recipe=>listRecipe(recipe))}</div>:<div>No results for: {state.value}</div>}
         </div>
 }
 
