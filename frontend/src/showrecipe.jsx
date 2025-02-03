@@ -72,10 +72,13 @@ function ShowRecipe(){
     }
 
     function showIt(recipe){
+        // gets the recipe and show all its contents
 
         function showReview(review, index){
+            // shows each review
 
             function editIt(index){
+                // toggle edit review form
                 setEditStars(review.rating)
                 if (editReviewField!=undefined&&editReviewField!="n"){
                     setEditReviewField('n')                    
@@ -88,14 +91,16 @@ function ShowRecipe(){
                 }
 
             }
-
+            
             function handleEditStars(num){
+                // set stars to help hovering
                 if (editAllow==true){
                     setEditStars(num)
                 }
             }
 
             function handleEditFinalStars(num){
+                // seting final stars to push to backend
                 if (editAllow==true){
                     setEditStarsFinal(num)
                     setEditAllow(false)
@@ -107,6 +112,7 @@ function ShowRecipe(){
             }
 
             async function updateReview(e){
+                // calling backend to edit review 
                 e.preventDefault()
                 await fetch(`${import.meta.env.VITE_FETCH_URL}/editreview/${review.id}`, {
                     method:"PUT",
@@ -123,6 +129,7 @@ function ShowRecipe(){
             }
 
             return <div className="review">
+                    {/* if the editreviewfield doesnt equal the index of the current review show the review normally */}
                     {editReviewField!=index?
                     <div>
                         <h3><span>{review.writer.username}</span> {review.title}</h3>
@@ -147,12 +154,14 @@ function ShowRecipe(){
                             <button type="submit">Update</button>
                         </form>
                     </div>}
+                    {/* show edit and delete buttons to reviews created by you */}
                     {review.writerid==user.id&&<div><button onClick={()=>deleteReview(review.id)}>Delete</button><button onClick={()=>editIt(index)}>Edit</button></div>}
                 </div>
 
         }
 
         async function deleteReview(id){
+            // gets the id of review and calls backend to delete it
             await fetch(`${import.meta.env.VITE_FETCH_URL}/deletereview/${id}`, {
                 method:"DELETE",
                 headers:{"Content-Type":"application/json"},
@@ -164,6 +173,7 @@ function ShowRecipe(){
         }
 
         function list(item){
+            // show ingredient or instruction on list tag
             return <li>{item}</li>
         }
 
