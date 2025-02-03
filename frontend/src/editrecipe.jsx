@@ -100,7 +100,7 @@ function EditRecipe(){
     }
 
     function listIngr(item, index){
-
+        // list ingredient
         function deletIt(index){
             var newList = listOfIngredients.slice();
             // let newList = listOfIngredients
@@ -125,12 +125,13 @@ function EditRecipe(){
                     {item}
                     <button type="button" onClick={()=>deletIt(index)}>delete</button>
                     <button type="button" onClick={()=>editIt(index)}>Edit</button>
+                    {/* if showeditingfield eqals index of the current ingredient show the form to update  */}
                     {showEditIngField==index&&<div><input value={ingredient} onChange={(e)=>setIngredient(e.target.value)}/><button onClick={()=>updateIt(index)}>Update</button></div>}
             </li>
     }
 
     function listInst(item, index){
-
+        // list instruction
         function deletIt(index){
             var newList = listOfInstructions.slice();
             // let newList = listOfInstructions
@@ -155,6 +156,7 @@ function EditRecipe(){
                     {item}
                     <button type="button" onClick={()=>deletIt(index)}>delete</button>
                     <button type="button" onClick={()=>editIt(index)}>Edit</button>
+                    {/* if showeditinsfield eqals index of the current instruction show the form to update  */}
                     {showEditInsField==index&&<div><input value={instruction} onChange={(e)=>setInstruction(e.target.value)}/><button type="button" onClick={()=>updateIt(index)}>Update</button></div>}
                 </li>
 
