@@ -15,7 +15,12 @@ function ShowRecipe(){
     const [reviewsIds, setReviewsIds] = useState([])
     const [update, setUpdate] = useState("")
     const navigate =  useNavigate()
-
+    const [editReviewField, setEditReviewField] = useState("n")
+    const [editTitle, setEditTitle] = useState("")
+    const [editDescription, setEditDescription]  = useState("")
+    const [editStars, setEditStars] = useState(0)
+    const [editStarsFinal, setEditStarsFinal] = useState(0)
+    const [editAllow, setEditAllow] = useState(true)
     useEffect(()=>{
         (
             async ()=>{
@@ -67,13 +72,84 @@ function ShowRecipe(){
     }
 
     function showIt(recipe){
-        function showReview(review){
+
+        function showReview(review, index){
+
+            function editIt(index){
+                setEditStars(review.rating)
+                if (editReviewField!=undefined&&editReviewField!="n"){
+                    setEditReviewField('n')                    
+                }else{
+                    setEditTitle(review.title)
+                    setEditDescription(review.description)
+                    setEditReviewField(index)
+                    setEditStarsFinal(review.rating)
+                    setEditAllow(false)
+                }
+
+            }
+
+            function handleEditStars(num){
+                if (editAllow==true){
+                    setEditStars(num)
+                }
+            }
+
+            function handleEditFinalStars(num){
+                if (editAllow==true){
+                    setEditStarsFinal(num)
+                    setEditAllow(false)
+                }else{
+                    setEditStarsFinal(0)
+                    setEditAllow(true)
+                }
+                
+            }
+
+            async function updateReview(e){
+                e.preventDefault()
+                await fetch(`${import.meta.env.VITE_FETCH_URL}/editreview/${review.id}`, {
+                    method:"PUT",
+                    headers:{"Content-Type":"application/json"},
+                    body:JSON.stringify({
+                        recipeid:recipe.id,
+                        title:editTitle,
+                        description:editDescription,
+                        rating:editStarsFinal
+                    })
+                })
+                setEditReviewField('n')
+                setUpdate({})
+            }
+
             return <div className="review">
-                    <h3><span>{review.writer.username}</span> {review.title}</h3>
-                    <p>{review.description}</p>
-                    <div className="fa fa-star" style={{color:"gold"}}>{review.rating} Stars </div>
-                    {review.writerid==user.id&&<div><button onClick={()=>deleteReview(review.id)}>Delete</button><button>Edit</button></div>}
+                    {editReviewField!=index?
+                    <div>
+                        <h3><span>{review.writer.username}</span> {review.title}</h3>
+                        <p>{review.description}</p>
+                        <div className="fa fa-star" style={{color:"gold"}}>{review.rating} Stars </div>
+                    </div>
+                    :<div>
+                        <form action="" onSubmit={updateReview}> 
+                            <label>Review Title:</label>
+                            <input type="text" value={editTitle} onChange={(e)=>setEditTitle(e.target.value)}/>
+                            <label htmlFor="">Review Description: </label>
+                            <textarea name="" id="" value={editDescription} onChange={(e)=>setEditDescription(e.target.value)}></textarea>
+                            <label htmlFor="">Rating</label>
+                            <div className="stars">
+                                <div onMouseEnter={()=>handleEditStars(1)} onMouseLeave={()=>handleEditStars(0)} onClick={()=>handleEditFinalStars(1)} className={editStars>=1?"fa fa-star checked":'fa fa-star'}></div>
+                                <div onMouseEnter={()=>handleEditStars(2)} onMouseLeave={()=>handleEditStars(0)} onClick={()=>handleEditFinalStars(2)}  className={editStars>=2?"fa fa-star checked":"fa fa-star"}></div>
+                                <div onMouseEnter={()=>handleEditStars(3)} onMouseLeave={()=>handleEditStars(0)} onClick={()=>handleEditFinalStars(3)}  className={editStars>=3?"fa fa-star checked":'fa fa-star'}></div>
+                                <div onMouseEnter={()=>handleEditStars(4)} onMouseLeave={()=>handleEditStars(0)} onClick={()=>handleEditFinalStars(4)}  className={editStars>=4?"fa fa-star checked":'fa fa-star'}></div>
+                                <div onMouseEnter={()=>handleEditStars(5)} onMouseLeave={()=>handleEditStars(0)} onClick={()=>handleEditFinalStars(5)}  className={editStars>=5?"fa fa-star checked":'fa fa-star'}></div>
+                            </div>
+                            {editStarsFinal}
+                            <button type="submit">Update</button>
+                        </form>
+                    </div>}
+                    {review.writerid==user.id&&<div><button onClick={()=>deleteReview(review.id)}>Delete</button><button onClick={()=>editIt(index)}>Edit</button></div>}
                 </div>
+
         }
 
         async function deleteReview(id){
@@ -90,6 +166,7 @@ function ShowRecipe(){
         function list(item){
             return <li>{item}</li>
         }
+
         return <div >
                 <h2>{recipe.title}</h2>
                 {!user.username?'':!recipe.userswhosaved.includes(user.id)?<button onClick={()=>saveRecipe()}>Save the Recipe</button>:<button onClick={()=>deleteSavedRecipe()}>remove from saved</button>}
@@ -108,7 +185,7 @@ function ShowRecipe(){
                 {recipe.writerid==user.id&&<button onClick={(e)=>deleteRecipe(e, recipe)}>Delete</button>}
 
                 <h2>Reviews:</h2>
-                {recipe.reviews.length>0&&recipe.reviews.map(review=>showReview(review))}
+                {recipe.reviews.length>0&&recipe.reviews.map((review, index)=>showReview(review, index))}
             </div>
     }
 
