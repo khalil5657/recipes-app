@@ -31,6 +31,11 @@ function EditRecipe(){
     const [oldImgUrl, setOldImgUrl] = useState(state?state.recipe.img.url:"")
     const [file, setFile] = useState("")
 
+    function handleSetFile(value){
+        setFile(value)
+        setOldImgUrl("")
+    }
+
     function handleInstState(e){
         e.preventDefault()
         if (showAddNewInstField==false){
@@ -159,11 +164,11 @@ function EditRecipe(){
             <form action="" onSubmit={updateRecipe} encType="multipart/form-data">
                 <label htmlFor="">title</label>
                 <input type="text"  value={title} onChange={(e)=>setTitle(e.target.value)}/>
-                <img src={oldImgUrl}/>
+                {oldImgUrl&&<img src={oldImgUrl}/>}
                 <label htmlFor="">description</label>
                 <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)}></textarea>
                 <label htmlFor="">image</label>
-                <input type="file" name="picture" onChange={(e)=>setFile(e.target.files[0])}/>
+                <input type="file" name="picture" onChange={(e)=>handleSetFile(e.target.files[0])}/>
                 <label htmlFor="">ingredients</label>
                     <br />
                 {listOfIngredients.map((item, index)=><div>{listIngr(item, index)} <br /></div>)}

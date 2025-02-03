@@ -72,8 +72,21 @@ function ShowRecipe(){
                     <h3><span>{review.writer.username}</span> {review.title}</h3>
                     <p>{review.description}</p>
                     <div className="fa fa-star" style={{color:"gold"}}>{review.rating} Stars </div>
+                    {review.writerid==user.id&&<div><button onClick={()=>deleteReview(review.id)}>Delete</button><button>Edit</button></div>}
                 </div>
         }
+
+        async function deleteReview(id){
+            await fetch(`${import.meta.env.VITE_FETCH_URL}/deletereview/${id}`, {
+                method:"DELETE",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    recipeid:recipe.id
+                  })
+            })
+            setUpdate({})
+        }
+
         function list(item){
             return <li>{item}</li>
         }

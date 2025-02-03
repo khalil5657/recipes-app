@@ -613,4 +613,32 @@ app.delete("/deleterecipe/:id", async(req, res)=>{
     res.status(200).json({message:"success"})
 })
 
+app.delete("/deletereview/:id", async(req, res)=>{
+    await prisma.review.delete({
+        where:{
+            id:req.params.id
+        }
+    })
+    /// get all reviews of the recipe 
+    const recipeReviews = await prisma.review.findMany({
+        where:{
+            recipeid:req.body.recipeid
+        }
+    })
+    let ratings = recipeReviews.map(review=>review.rating)
+    /// divition of sum of rating by number of reviews to get rating
+    let sum = ratings.reduce( (acc,e ) => acc + e , 0)
+    let recipeRating = Number(parseFloat(sum/ratings.length).toFixed(2))
+    /// add rating to recipe
+    await prisma.recipe.update({
+        where:{
+            id:req.body.recipeid
+        },
+        data:{
+            rating:recipeRating
+        }
+    })
+    res.status(200).json({message:"success"})
+})
+
 app.listen(3000)
