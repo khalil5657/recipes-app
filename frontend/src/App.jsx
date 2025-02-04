@@ -66,7 +66,7 @@ function RootLayout(){
               <input type="text" placeholder='search' value={searchValue} onChange={(e)=>setSearchValue(e.target.value)}/>
               <Link className='Link' to="/searchresults" state={{value:searchValue}}>Search</Link>
             </div>
-            {!user&&<div><Link to="/login">Login</Link><Link to="/signup">Signup</Link></div>}
+            {!user&&<div className="navlog"><Link className='l' to="/login">Login</Link><Link className='l' to="/signup">Signup</Link></div>}
             {user&&<div className='navuser'>
                       <Link className='Link' to="/showprofile">
                         {user.img?<img src={user.img.url} className='profile-img'/>:<img src='https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg' className='profile-img'/>}{user.username}

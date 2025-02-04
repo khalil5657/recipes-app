@@ -40,15 +40,40 @@ function Login(){
     if (loading){
         return <h1>Loading...</h1>
     }
-    return <div>
-            <h1>Login now!!</h1>
-            <form action="" onSubmit={login}>
+    return <div className="signup">
+            {/* <form action="" onSubmit={login}>
                 <label htmlFor="">Username</label>
                 <input type="text" value={username} onChange={(e)=>setUsername(e.target.value)}/>
                 <label htmlFor="">Password</label>
                 <input type="text" value={password} onChange={(e)=>setPassword(e.target.value)}/>
                 <button type="submit">Login</button>
-            </form>
+            </form> */}
+            <div className="form-container">
+                <h4>Login now!!</h4>
+                <h2>Login</h2>
+                <form onSubmit={login} >
+                    <div className="input-group">
+                        <label htmlFor="username">Username</label>
+                        <input
+                        type="text"
+                        id="username"
+                        onChange={(e)=>setUsername(e.target.value)}
+                        placeholder="Enter your username"
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                        type="password"
+                        id="password"
+                        onChange={(e)=>setPassword(e.target.value)}
+                        placeholder="Enter your password"
+                        />
+                    </div>
+                    <br /><br />
+                    <button type="submit">Log In</button>
+                </form>
+            </div>
         </div>
 }
 

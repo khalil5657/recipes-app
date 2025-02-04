@@ -72,6 +72,10 @@ nav{
   border: 1px solid white;
   border-radius: 20px;
   box-shadow: 1px 1px 1px white;
+  transition: all 0.3s;
+}
+.navuser .Link:hover{
+  filter: brightness(70%);
 }
 .navuser .Link img{
   height: 80%;
@@ -91,6 +95,30 @@ nav{
 }
 .navuser button:hover{
   transform: scale(1.2);
+}
+
+.navlog{
+  display: flex;
+  gap: 10px;
+}
+.navlog .l:first-child{
+  background-color: white;
+  color: blue;
+  padding: 7px;
+  cursor: pointer;
+  text-decoration: none;
+    transition: all 0.5s;
+}
+.navlog .l:nth-child(2){
+  background-color: blue;
+  color: white;
+  padding: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.5s;
+}
+.navlog .l:hover{
+  transform: scale(1.1);
 }
 
 .Link{
@@ -193,3 +221,86 @@ nav{
 .sorting:hover div{
   display: block;
 }
+
+
+
+
+
+
+
+
+
+
+
+.form-container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.form-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+  background-color: #45a049;
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.signup{
+  height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* .chooseimage{
+  height: 50px;
+  width: 50px;
+  background-color: red;
+  cursor: pointer;
+  display: block;
+}
+.profileimginput{
+  display: none;
+} */
