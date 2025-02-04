@@ -160,6 +160,13 @@ app.get("/:type/recipes/:mode", async(req, res)=>{
             include:{
                 img:true,
                 reviews:{
+                    include:{
+                        writer:{
+                            include:{
+                                img:true
+                            }
+                        }
+                    },
                     orderBy:{
                         posteddate:"desc"
                     }
@@ -183,6 +190,13 @@ app.get("/:type/recipes/:mode", async(req, res)=>{
             include:{
                 img:true,
                 reviews:{
+                    include:{
+                        writer:{
+                            include:{
+                                img:true
+                            }
+                        }
+                    },
                     orderBy:{
                         posteddate:"desc"
                     }
@@ -206,6 +220,13 @@ app.get("/:type/recipes/:mode", async(req, res)=>{
             include:{
                 img:true,
                 reviews:{
+                    include:{
+                        writer:{
+                            include:{
+                                img:true
+                            }
+                        }
+                    },
                     orderBy:{
                         posteddate:"desc"
                     }
@@ -281,8 +302,12 @@ app.get("/recipe/:id", async(req, res)=>{
             img:true,
             reviews:{
                 include:{
-                    writer:true
-                },
+                        writer:{
+                            include:{
+                                img:true
+                            }
+                        }
+                    },
                 orderBy:{
                     posteddate:"desc"
                 }
@@ -330,6 +355,13 @@ app.get("/recipes", async(req, res)=>{
         include:{
             img:true,
             reviews:{
+                include:{
+                        writer:{
+                            include:{
+                                img:true
+                            }
+                        }
+                    },
                 orderBy:{
                     posteddate:"desc"
                 }

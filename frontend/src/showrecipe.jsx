@@ -74,7 +74,54 @@ function ShowRecipe(){
     function showIt(recipe){
         // gets the recipe and show all its contents
 
-        function showReview(review, index){
+        
+
+        
+
+        function list(item){
+            // show ingredient or instruction on list tag
+            return <li className="ingandins">{item}</li>
+        }
+
+        return <div >
+                <h2 style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                    {recipe.title}
+                    {recipe.rating?<div className="fa fa-star" style={{color:"gold"}}>{recipe.rating} Stars </div>:<div>no rating yet</div>}
+                </h2>
+                {!user.username?'':!recipe.userswhosaved.includes(user.id)?<button onClick={()=>saveRecipe()}>Save the Recipe</button>:<button onClick={()=>deleteSavedRecipe()}>remove from saved</button>}
+                {recipe.img&&<div className="showrecipeimg"><img src={recipe.img.url}/></div>}
+                <p className="recipeparagraph">{recipe.description}</p>
+                <h2>Ingredients:</h2>
+                <ul>
+                    {recipe.ingredients.map(item=>list(item))}
+                </ul>
+                <h2>instructions:</h2>
+                <ul>
+                    {recipe.instructions.map(item=>list(item))}
+                </ul>
+                <div className="recipebuttons">
+                    {recipe.writerid==user.id&&<Link to={`/editrecipe/${recipe.id}`} state={{recipe:recipe}} className="editrecipebtn">Edit</Link>}
+                    {recipe.writerid==user.id&&<button onClick={(e)=>deleteRecipe(e, recipe)} className="delrecipebtn">Delete</button>}
+                </div>
+                
+                <h2>Reviews:</h2>
+                {/* {recipe.reviews.length>0&&recipe.reviews.map((review, index)=>showReview(review, index))} */}
+            </div>
+    }
+
+    async function deleteReview(id){
+            // gets the id of review and calls backend to delete it
+            await fetch(`${import.meta.env.VITE_FETCH_URL}/deletereview/${id}`, {
+                method:"DELETE",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    recipeid:recipe.id
+                  })
+            })
+            setUpdate({})
+        }
+
+    function showReview(review, index, recipe){
             // shows each review
 
             function editIt(index){
@@ -131,17 +178,25 @@ function ShowRecipe(){
             return <div className="review">
                     {/* if the editreviewfield doesnt equal the index of the current review show the review normally */}
                     {editReviewField!=index?
-                    <div>
-                        <h3><span>{review.writer.username}</span> {review.title}</h3>
-                        <p>{review.description}</p>
-                        <div className="fa fa-star" style={{color:"gold"}}>{review.rating} Stars </div>
+                    <div className="review">
+                        <div className="reviewprofile">
+                            {review.writer.img?<img src={review.writer.img.url} alt="" />:<img src='https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg'/>}
+                            <div >
+                                <div>{review.writer.username}</div>
+                                <div className="fa fa-star" style={{color:"gold"}}>{review.rating} Stars </div>
+                            </div>
+                        </div>
+                        <div className="reviewcontent">
+                            <h5>{review.title}</h5>
+                            <p>{review.description}</p>
+                        </div>
                     </div>
                     :<div>
-                        <form action="" onSubmit={updateReview}> 
+                        <form action="" onSubmit={updateReview} className="reviewform"> 
                             <label>Review Title:</label>
                             <input type="text" value={editTitle} onChange={(e)=>setEditTitle(e.target.value)}/>
                             <label htmlFor="">Review Description: </label>
-                            <textarea name="" id="" value={editDescription} onChange={(e)=>setEditDescription(e.target.value)}></textarea>
+                            <textarea name="" id="" value={editDescription} onChange={(e)=>setEditDescription(e.target.value)} rows={8} cols={25}></textarea>
                             <label htmlFor="">Rating</label>
                             <div className="stars">
                                 <div onMouseEnter={()=>handleEditStars(1)} onMouseLeave={()=>handleEditStars(0)} onClick={()=>handleEditFinalStars(1)} className={editStars>=1?"fa fa-star checked":'fa fa-star'}></div>
@@ -158,45 +213,6 @@ function ShowRecipe(){
                     {review.writerid==user.id&&<div><button onClick={()=>deleteReview(review.id)}>Delete</button><button onClick={()=>editIt(index)}>Edit</button></div>}
                 </div>
 
-        }
-
-        async function deleteReview(id){
-            // gets the id of review and calls backend to delete it
-            await fetch(`${import.meta.env.VITE_FETCH_URL}/deletereview/${id}`, {
-                method:"DELETE",
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({
-                    recipeid:recipe.id
-                  })
-            })
-            setUpdate({})
-        }
-
-        function list(item){
-            // show ingredient or instruction on list tag
-            return <li>{item}</li>
-        }
-
-        return <div >
-                <h2>{recipe.title}</h2>
-                {!user.username?'':!recipe.userswhosaved.includes(user.id)?<button onClick={()=>saveRecipe()}>Save the Recipe</button>:<button onClick={()=>deleteSavedRecipe()}>remove from saved</button>}
-                {recipe.img&&<div><img src={recipe.img.url}/></div>}
-                <p>{recipe.description}</p>
-                {recipe.rating?<div className="fa fa-star" style={{color:"gold"}}>{recipe.rating} Stars </div>:<div>no rating yet</div>}
-                <h2>Ingredients:</h2>
-                <ul>
-                    {recipe.ingredients.map(item=>list(item))}
-                </ul>
-                <h2>instructions:</h2>
-                <ul>
-                    {recipe.instructions.map(item=>list(item))}
-                </ul>
-                {recipe.writerid==user.id&&<Link to={`/editrecipe/${recipe.id}`} state={{recipe:recipe}}>Edit</Link>}
-                {recipe.writerid==user.id&&<button onClick={(e)=>deleteRecipe(e, recipe)}>Delete</button>}
-
-                <h2>Reviews:</h2>
-                {recipe.reviews.length>0&&recipe.reviews.map((review, index)=>showReview(review, index))}
-            </div>
     }
 
     function handleSetStars(num){
@@ -244,15 +260,15 @@ function ShowRecipe(){
         return navigate("/")
     }
 
-    return <div>
+    return <div className="showrecipe">
             {showIt(data)}
-            {!user.username?'':(!reviewsIds.includes(user.id))?<button onClick={(e)=>handleShowForm(e)}>Add review</button>:<div>You Already added a review</div>}
+            {!user.username?'':(!reviewsIds.includes(user.id))?<button onClick={(e)=>handleShowForm(e)} className="addreview">Add review</button>:<div>You Already added a review</div>}
             {showReviewFormState&&
-            <form onSubmit={sendReview}>
+            <form onSubmit={sendReview} className="reviewform">
                 <label htmlFor="">Review Title</label>
                 <input type="text" value={reviewTitle} onChange={(e)=>setReviewTitle(e.target.value)}/>
                 <label htmlFor="">review description</label>
-                <textarea name="" id="" value={reviewDescription} onChange={(e)=>setReviewDescription(e.target.value)}></textarea>
+                <textarea name="" id="" value={reviewDescription} onChange={(e)=>setReviewDescription(e.target.value)} rows={8} cols={25}></textarea>
                 <label htmlFor="">Rating</label>
                 <div className="stars">
                     <div onMouseEnter={()=>handleSetStars(1)} onMouseLeave={()=>handleSetStars(0)} onClick={()=>handleFinalStars(1)} className={stars>=1?"fa fa-star checked":'fa fa-star'}></div>
@@ -264,6 +280,8 @@ function ShowRecipe(){
                 {starsFinal}
                 <button type="submit">post</button>
             </form>}
+            {data.reviews.length>0&&data.reviews.map((review, index)=>showReview(review, index, data))}
+            
         </div>
 }
 

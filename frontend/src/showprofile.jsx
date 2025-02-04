@@ -81,9 +81,17 @@ function ShowProfile(){
 
     function listRecipe(recipe){
         return <Link className="Link recipe" to={`/showcategory/${recipe.category}/recipe/${recipe.id}`}>
-                <h2>{recipe.title} <span>{recipe.nutvalue}c</span></h2>
+                <h2>{recipe.title}</h2>
                 {recipe.img&&<div><img src={recipe.img.url}/></div>}
-                {recipe.rating?<div>{recipe.rating}</div>:<div>no rating yet</div>}
+                {recipe.rating?
+                <div className="last-section">
+                                    <div className="starsrating">
+                                        <div className="fa fa-star" style={{color:"gold"}}> </div>
+                                        <div> {recipe.rating} Stars </div>
+                                    </div>
+                                    <div className="calor">{recipe.nutvalue}c</div>
+                                </div>
+                :<div>no rating yet</div>}
             </Link>
     }
 
