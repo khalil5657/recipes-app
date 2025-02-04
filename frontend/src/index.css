@@ -10,7 +10,8 @@ nav{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(rgb(247, 72, 72), yellow);
+  /* background-image: linear-gradient(rgb(255, 255, 0), black); */
+  background-color: orange;
   height: 8vh;
   padding-left: 10px;
   padding-right: 10px;
@@ -73,6 +74,14 @@ nav{
   border-radius: 20px;
   box-shadow: 1px 1px 1px white;
   transition: all 0.3s;
+  font-weight: bold;
+}
+.navuser .Link .admin{
+  color: red;
+  display: inline-block;
+  font-size: 0.7rem;
+  margin-left: 5px;
+  font-weight: bold;
 }
 .navuser .Link:hover{
   filter: brightness(70%);
@@ -147,6 +156,13 @@ nav{
 .recipes{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 20px;
+  padding: 60px;
+}
+.ratandcal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .recipe{
   border: 1px solid gray;
@@ -155,7 +171,25 @@ nav{
   height: 300px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows:60px 200px 60px;
+  grid-template-rows:60px 200px 40px;
+  transition: all 0.5s;
+}
+.recipe:hover{
+  transform: scale(1.1);
+}
+.last-section{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.starsrating{
+  display: flex;
+}
+.calor{
+  display: flex;
+  color: orange;
 }
 .recipe span{
   color: orange;
@@ -168,7 +202,12 @@ nav{
 .recipe h2{
   margin: 0;
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
+
 .stars{
   display: flex;
   width: 200px;
@@ -180,6 +219,11 @@ nav{
 }
 .fa-star{
   color: gray;
+  /* padding-left: 8px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
 }
 .checked{
   color: orange;
@@ -203,6 +247,7 @@ nav{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   column-gap: 50px;
+  height: max-content;
 }
 .home h1{
   display: flex;
@@ -294,13 +339,3 @@ nav{
   align-items: center;
   justify-content: center;
 }
-/* .chooseimage{
-  height: 50px;
-  width: 50px;
-  background-color: red;
-  cursor: pointer;
-  display: block;
-}
-.profileimginput{
-  display: none;
-} */
