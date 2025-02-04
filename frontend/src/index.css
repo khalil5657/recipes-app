@@ -1,3 +1,6 @@
+:root{
+  font-family: Arial, Helvetica, sans-serif;
+}
 body{
   padding: 0;
   margin: 0;
@@ -6,9 +9,52 @@ body{
 nav{
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-image: linear-gradient(rgb(247, 72, 72), yellow);
-  height: 50px;
+  height: 8vh;
+  padding-left: 10px;
+  padding-right: 10px;
 }
+
+.navsearch{
+  height: 32px;
+  width: 320px;
+  display: grid;
+  grid-template-columns: 1fr 55px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.navsearch .Link{
+  background-color: rgb(255, 183, 0);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: all 0.3;
+}
+.navsearch .Link:hover{
+  opacity: 0.8;
+}
+.navsearch input{
+  border-right: none;
+  border: none;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+.navsearch input:focus{
+  outline: none;
+}
+
+.navhome{
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+
 .Link{
   text-decoration: none;
   color: black;
@@ -33,11 +79,12 @@ nav{
 }
 .recipe{
   border: 1px solid gray;
-  box-shadow: 1px 1px 1px gray;
+  box-shadow: 2px 2px 2px gray;
+  border-radius: 6px;
   height: 300px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows:40px 200px 60px;
+  grid-template-rows:60px 200px 60px;
 }
 .recipe span{
   color: orange;
@@ -72,10 +119,25 @@ nav{
 .review h3 span{
   color: red;
 }
+.home{
+  height: calc(92vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .homerecipes{
+  width: 85%;
+  margin-left: 50%;
+  transform: translateX(-50%);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   column-gap: 50px;
+}
+.home h1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
 }
 .profile-img{
   height: 45px;

@@ -32,7 +32,7 @@ function Home(){
         return <h1>Loading...</h1>
     }
 
-    return <div>
+    return <div className="home">
             <h1>Welcome home</h1>
             <div className="homerecipes">
                 {data.map(recipe=>listIt(recipe))}
