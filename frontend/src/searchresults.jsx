@@ -66,11 +66,15 @@ function ShowSearchResults(){
     }
 
     return <div className="showsearch">
-            <div className="sorting">Sort by:
-                <div onClick={()=>setSortBy("rating")}>Rating {sortBy=="rating"&&<span>✓</span>}</div>
-                <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>
-                <div onClick={()=>setSortBy("calories")}>Calories{sortBy=="calories"&&<span>✓</span>}</div>
+            <div style={{paddingLeft:"60px", paddingRight:"60px", paddingTop:"20px"}}>
+                <h1>Search Results for "{state.value}"</h1>
+                <div className="sorting">Sort by:
+                    <div onClick={()=>setSortBy("rating")}>Rating {sortBy=="rating"&&<span>✓</span>}</div>
+                    <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>
+                    <div onClick={()=>setSortBy("calories")}>Calories{sortBy=="calories"&&<span>✓</span>}</div>
+                </div>
             </div>
+            
             {dataByDate.length>0?<div className="recipes">{sortBy=="rating"?dataByRating.map(recipe=>listRecipe(recipe)):sortBy=="date"?dataByDate.map(recipe=>listRecipe(recipe)):dataByCal.map(recipe=>listRecipe(recipe))}</div>:<div>No results for: {state.value}</div>}
         </div>
 }

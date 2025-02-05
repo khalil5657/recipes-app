@@ -106,18 +106,41 @@ function ShowProfile(){
                     
             </div>
     }
+
+    function showReview(review){
+            // shows each review             
+
+            return <div className="review-container">
+                    {/* if the editreviewfield doesnt equal the index of the current review show the review normally */}
+                    
+                    <div className="review">
+                        <div className="reviewprofile">
+                            {review.writer.img?<img src={review.writer.img.url} alt="" />:<img src='https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg'/>}
+                            <div >
+                                <div>{review.writer.username}</div>
+                                <div className="fa fa-star" style={{color:"gold"}}>{review.rating} Stars </div>
+                            </div>
+                        </div>
+                        <div className="reviewcontent">
+                            <h5>{review.title}</h5>
+                            <p>{review.description}</p>
+                        </div>
+                    </div>
+                    {/* show edit and delete buttons to reviews created by you */}
+                </div>
+
+    }
+
     if (loading){
         return <h1>Loading...</h1>
     }
-    // if (sortBy=="date"){
-    //     alert(savedRecipesByStars[0].title)
-    // }else{
-    //     alert(savedRecipes[0].title)
-    // }
 
-    return <div className="showprofile">
-        <h1>{user.username}</h1>
-        {user.img?<img src={user.img.url}/>:<img src="https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg"/>}
+    return <div className="showprofile" style={{padding:"60px"}}>
+        <div className="profile">
+            <h1>{user.username}</h1>
+            {user.img?<img src={user.img.url}/>:<img src="https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg"/>}
+
+        </div>
         <div className="sorting">Sort by:
             <div onClick={()=>setSortBy("rating")}>Rating {sortBy=="rating"&&<span>✓</span>}</div>
             <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>
@@ -129,7 +152,7 @@ function ShowProfile(){
         <h3>Created recipes:</h3>
         {createdRecipesByStars.length>0?<div className="recipes">{sortBy=="date"?createdRecipes.map(recipe=>listRecipe(recipe)):sortBy=="calories"?createdRecipesByCal.map(recipe=>listRecipe(recipe)):createdRecipesByStars.map(recipe=>listRecipe(recipe))}</div>:<div>No created recipes</div>}
         <h3>Posted Reviews:</h3>
-        {postedReviews.length>0?postedReviews.map(review=>listReview(review)):<div>No Posted Reviews</div>}
+        {postedReviews.length>0?postedReviews.map(review=>showReview(review)):<div>No Posted Reviews</div>}
 
     </div>
 }
