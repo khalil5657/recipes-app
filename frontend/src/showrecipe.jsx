@@ -88,7 +88,7 @@ function ShowRecipe(){
                     {recipe.title}
                     {recipe.rating?<div className="fa fa-star" style={{color:"gold"}}>{recipe.rating} Stars </div>:<div>no rating yet</div>}
                 </h2>
-                {!user.username?'':!recipe.userswhosaved.includes(user.id)?<button onClick={()=>saveRecipe()}>Save the Recipe</button>:<button onClick={()=>deleteSavedRecipe()}>remove from saved</button>}
+                {!user.username?'':!recipe.userswhosaved.includes(user.id)?<button onClick={()=>saveRecipe()} className="saverecipe">Save the Recipe</button>:<button onClick={()=>deleteSavedRecipe()} className="removefromsaved">remove from saved</button>}
                 {recipe.img&&<div className="showrecipeimg"><img src={recipe.img.url}/></div>}
                 <p className="recipeparagraph">{recipe.description}</p>
                 <h2>Ingredients:</h2>
@@ -175,7 +175,7 @@ function ShowRecipe(){
                 setUpdate({})
             }
 
-            return <div className="review">
+            return <div className="review-container">
                     {/* if the editreviewfield doesnt equal the index of the current review show the review normally */}
                     {editReviewField!=index?
                     <div className="review">
@@ -192,7 +192,7 @@ function ShowRecipe(){
                         </div>
                     </div>
                     :<div>
-                        <form action="" onSubmit={updateReview} className="reviewform"> 
+                        <form action="" onSubmit={updateReview} className="editreviewform"> 
                             <label>Review Title:</label>
                             <input type="text" value={editTitle} onChange={(e)=>setEditTitle(e.target.value)}/>
                             <label htmlFor="">Review Description: </label>
@@ -210,7 +210,7 @@ function ShowRecipe(){
                         </form>
                     </div>}
                     {/* show edit and delete buttons to reviews created by you */}
-                    {review.writerid==user.id&&<div><button onClick={()=>deleteReview(review.id)}>Delete</button><button onClick={()=>editIt(index)}>Edit</button></div>}
+                    {review.writerid==user.id&&<div className="reviewbuttons"><button onClick={()=>deleteReview(review.id)} className="delreviewbtn">Delete</button><button onClick={()=>editIt(index)} className="editreviewbtn">Edit</button></div>}
                 </div>
 
     }

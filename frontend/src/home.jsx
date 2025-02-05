@@ -31,7 +31,10 @@ function Home(){
                                     </div>
                                     <div className="calor">{recipe.nutvalue}c</div>
                                 </div>
-                            :<div>no rating yet</div>}
+                            :<div className="last-section">
+                                <div>no rating yet</div>
+                                <div className="calor">{recipe.nutvalue}c</div>
+                            </div>}
             </Link>
     }
 

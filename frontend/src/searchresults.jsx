@@ -44,9 +44,20 @@ function ShowSearchResults(){
 
     function listRecipe(recipe){
         return <Link className="Link recipe" to={`/showcategory/${recipe.category}/recipe/${recipe.id}`}>
-                <h2>{recipe.title} <span>{recipe.nutvalue}c</span></h2>
+                <h2>{recipe.title} </h2>
                 {recipe.img&&<div><img src={recipe.img.url}/></div>}
-                {recipe.rating?<div>{recipe.rating}</div>:<div>no rating yet</div>}
+                {recipe.rating?
+                    <div className="last-section">
+                                    <div className="starsrating">
+                                        <div className="fa fa-star" style={{color:"gold"}}> </div>
+                                        <div> {recipe.rating} Stars </div>
+                                    </div>
+                                    <div className="calor">{recipe.nutvalue}c</div>
+                                </div>
+                :<div className="last-section">
+                        <div>no rating yet</div>
+                        <div className="calor">{recipe.nutvalue}c</div>
+                    </div>}
             </Link>
     }
 
@@ -54,7 +65,7 @@ function ShowSearchResults(){
         return <h1>Loading...</h1>
     }
 
-    return <div>
+    return <div className="showsearch">
             <div className="sorting">Sort by:
                 <div onClick={()=>setSortBy("rating")}>Rating {sortBy=="rating"&&<span>✓</span>}</div>
                 <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>

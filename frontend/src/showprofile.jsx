@@ -91,7 +91,10 @@ function ShowProfile(){
                                     </div>
                                     <div className="calor">{recipe.nutvalue}c</div>
                                 </div>
-                :<div>no rating yet</div>}
+                :<div className="last-section">
+                        <div>no rating yet</div>
+                        <div className="calor">{recipe.nutvalue}c</div>
+                    </div>}
             </Link>
     }
 
@@ -112,7 +115,7 @@ function ShowProfile(){
     //     alert(savedRecipes[0].title)
     // }
 
-    return <div>
+    return <div className="showprofile">
         <h1>{user.username}</h1>
         {user.img?<img src={user.img.url}/>:<img src="https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg"/>}
         <div className="sorting">Sort by:

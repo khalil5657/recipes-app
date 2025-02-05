@@ -69,7 +69,7 @@ function CreateRecipe(){
               })
         })
         const data = await rawData.json()
-        
+
         if (file && data.title ){
             const theFile = file;
             const formData = new FormData();
@@ -81,35 +81,33 @@ function CreateRecipe(){
         }
     }
 
-    return <div>
+    return <div className="createrecipe-container">
             <form action="" onSubmit={addRecipe} encType="multipart/form-data">
                 <label htmlFor="">title</label>
                 <input type="text"  value={title} onChange={(e)=>setTitle(e.target.value)}/>
                 <label htmlFor="">description</label>
-                <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)}></textarea>
+                <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)} rows={8}></textarea>
                 <label htmlFor="">image</label>
-                <input type="file" name="picture" onChange={(e)=>setFile(e.target.files[0])}/>
-                <label htmlFor="">ingredients</label>
-                    <br />
-                {listOfIngredients.map(item=><div>{item} <br /></div>)}
-                <button onClick={(e)=>handleState(e)}>Add Ingredient</button>
+                <input type="file" name="picture" onChange={(e)=>setFile(e.target.files[0])} />
+                <label htmlFor="">ingredients: </label>
+                <ul>{listOfIngredients.map(item=><li>{item}</li>)}</ul>
+                <button onClick={(e)=>handleState(e)} className="adding">Add Ingredient</button>
                 {showAddIngField&&
-                                <div>
+                                <div className="adding-container">
                                     <input value={ingredient} onChange={(e)=>setIngredient(e.target.value)}/>
                                     <button onClick={(e)=>addToLista(e)}>add</button>
                                 </div>}
-                <label htmlFor="">instructions</label>
-                <br />
-                {listOfInstructions.map(item=><div>{item} <br /></div>)}
-                <button onClick={(e)=>handleInstState(e)}>Add Instruction</button>
+                <label htmlFor="">instructions: </label>
+                <ul>{listOfInstructions.map(item=><li>{item} </li>)}</ul>
+                <button onClick={(e)=>handleInstState(e)} className="addins">Add Instruction</button>
                 {showAddInstField&&
-                                <div>
+                                <div className="addins-container">
                                     <input value={instruction} onChange={(e)=>setInstruction(e.target.value)}/>
                                     <button onClick={(e)=>addToInstLista(e)}>add</button>
                                 </div>}
                 <label htmlFor="">Nutritius value</label>
                 <input type="text" value={nutValue} onChange={(e)=>setNutValue(e.target.value)}/>
-            <button type="submit">Add Recipe</button>
+            <button type="submit" className="addrecipebtn">Add Recipe</button>
             </form>
         </div>
 }

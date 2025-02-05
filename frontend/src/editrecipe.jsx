@@ -162,7 +162,7 @@ function EditRecipe(){
 
     }
 
-    return <div>
+    return <div className="editrecipe-container">
             <form action="" onSubmit={updateRecipe} encType="multipart/form-data">
                 <label htmlFor="">title</label>
                 <input type="text"  value={title} onChange={(e)=>setTitle(e.target.value)}/>

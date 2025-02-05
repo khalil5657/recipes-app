@@ -54,7 +54,10 @@ function ShowCategory(){
                                     </div>
                                     <div className="calor">{recipe.nutvalue}c</div>
                                 </div>
-                :<div>no rating yet</div>}
+                :<div className="last-section">
+                            <div>no rating yet</div>
+                            <div className="calor">{recipe.nutvalue}c</div>
+                    </div>}
             </Link>
     }
 
@@ -62,15 +65,15 @@ function ShowCategory(){
         return <h1>Loading...</h1>
     }
 
-    return <div>
-            <h1>Recipes for {type}</h1>
+    return <div className="categ">
+            <h1>Recipes for <span>{type}</span></h1>
             <div className="sorting">Sort by:
                 <div onClick={()=>setSortBy("rating")}>Rating {sortBy=="rating"&&<span>✓</span>}</div>
                 <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>
                 <div onClick={()=>setSortBy("calories")}>Calories {sortBy=="calories"&&<span>✓</span>}</div>
             </div>
             {dataByDate.length>0?<div className="recipes">{sortBy=="rating"?dataByRating.map(recipe=>listIt(recipe)):sortBy=="calories"?dataByCal.map(recipe=>listIt(recipe)):dataByDate.map(recipe=>listIt(recipe))}</div>:"no data yet"}
-            {user.username&&<Link to={`/createrecipe/${type}`}>Create a {type} recipe</Link>}
+            {user.username&&<Link to={`/createrecipe/${type}`} className="create">Create a {type} recipe</Link>}
             
         </div>
 }
