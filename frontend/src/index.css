@@ -589,7 +589,7 @@ li{
   margin-top: 8vh;
 }
 
-.showprofile, .showsearch, .createrecipe-container, .editrecipecontainer{
+.showprofile, .showsearch, .createrecipe-container, .editrecipe-container{
   margin-top: 8vh;
 }
 
@@ -607,14 +607,14 @@ li{
   background-color: rgb(255, 182, 45);
   opacity: 0.8;
 }
-.createrecipe-container{
+.createrecipe-container, .editrecipe-container{
   display: flex;
   align-items: center;
   justify-content: center;
   padding-top: 40px;
   padding-bottom: 40px;
 }
-.createrecipe-container label{
+.createrecipe-container label, .editrecipe-container label{
   display: block;
   margin: 5px;
 }
@@ -642,16 +642,25 @@ li{
   transform: translateX(-10%);
 }
 
-.createrecipe-container form input, .createrecipe-container form textarea{
+.createrecipe-container form input, .createrecipe-container form textarea,
+.editrecipe-container form input, .editrecipe-container form textarea{
   font-size: 1.1rem;
   font-family: Arial, Helvetica, sans-serif;
 }
-.createrecipe-container form input{
+.createrecipe-container form input, .editrecipe-container form input{
   width: 40%;
   padding: 5px;
 }
-.createrecipe-container form textarea{
+.createrecipe-container form textarea, .editrecipe-container form textarea{
   width: 65%;
+}
+.editrecipe-container img{
+  width: 50%;
+  height: 280px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .adding, .addins{
@@ -668,7 +677,7 @@ li{
   opacity: 0.8;
 }
 
-.createrecipe-container form{
+.createrecipe-container form, .editrecipe-container form{
   font-size: 1.1rem;
   padding: 20px;
   width: 80%;

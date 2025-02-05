@@ -168,30 +168,28 @@ function EditRecipe(){
                 <input type="text"  value={title} onChange={(e)=>setTitle(e.target.value)}/>
                 {oldImgUrl&&<img src={oldImgUrl}/>}
                 <label htmlFor="">description</label>
-                <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)}></textarea>
+                <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)} rows={8}></textarea>
                 <label htmlFor="">image</label>
                 <input type="file" name="picture" onChange={(e)=>handleSetFile(e.target.files[0])}/>
-                <label htmlFor="">ingredients</label>
-                    <br />
-                {listOfIngredients.map((item, index)=><div>{listIngr(item, index)} <br /></div>)}
-                <button onClick={(e)=>handleState(e)}>Add Ingredient</button>
+                <label htmlFor="">ingredients: </label>
+                {listOfIngredients.map((item, index)=><div>{listIngr(item, index)} </div>)}
+                <button onClick={(e)=>handleState(e)}className="adding">Add Ingredient</button>
                 {showAddNewIngField&&
-                                <div>
+                                <div className="adding-container">
                                     <input value={newIngredient} onChange={(e)=>setNewIngredient(e.target.value)}/>
                                     <button onClick={(e)=>addToLista(e)}>add</button>
                                 </div>}
                 <label htmlFor="">instructions</label>
-                <br />
-                {listOfInstructions.map((item, index)=><div>{listInst(item, index)} <br /></div>)}
-                <button onClick={(e)=>handleInstState(e)}>Add Instruction</button>
+                {listOfInstructions.map((item, index)=><div>{listInst(item, index)}</div>)}
+                <button onClick={(e)=>handleInstState(e)} className="addins">Add Instruction</button>
                 {showAddNewInstField&&
-                                <div>
+                                <div className="addins-container">
                                     <input value={newInstruction} onChange={(e)=>setNewInstruction(e.target.value)}/>
                                     <button onClick={(e)=>addToInstLista(e)}>add</button>
                                 </div>}
                 <label htmlFor="">Nutritius value</label>
                 <input type="text" value={nutValue} onChange={(e)=>setNutValue(e.target.value)}/>
-            <button type="submit">Update Recipe</button>
+            <button type="submit" className="addrecipebtn">Update Recipe</button>
             </form>
         </div>
 }
