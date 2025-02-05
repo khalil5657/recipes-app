@@ -71,7 +71,7 @@ function ShowCategory(){
                 <div onClick={()=>setSortBy("rating")}>Rating {sortBy=="rating"&&<span>✓</span>}</div>
                 <div onClick={()=>setSortBy("date")}>Date {sortBy=="date"&&<span>✓</span>}</div>
                 <div onClick={()=>setSortBy("calories")}>Calories {sortBy=="calories"&&<span>✓</span>}</div>
-            </div>
+            </div>            
             {dataByDate.length>0?<div className="recipes">{sortBy=="rating"?dataByRating.map(recipe=>listIt(recipe)):sortBy=="calories"?dataByCal.map(recipe=>listIt(recipe)):dataByDate.map(recipe=>listIt(recipe))}</div>:"no data yet"}
             {user.username&&<Link to={`/createrecipe/${type}`} className="create">Create a {type} recipe</Link>}
             

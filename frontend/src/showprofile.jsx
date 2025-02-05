@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useOutletContext } from "react-router"
+import { Link, useNavigate, useOutletContext } from "react-router"
 
 function ShowProfile(){
     const [user, setUser] = useOutletContext()
@@ -12,11 +12,14 @@ function ShowProfile(){
     const [savedRecipesByCal, setSavedRecipesByCal] = useState([])
     const [createdRecipesByCal, setCreatedRecipesByCal] = useState([])
     const [sortBy, setSortBy] = useState("rating")
+    const navigate = useNavigate()
 
     useEffect(()=>{
         (
             async ()=>{
-
+                if (!user){
+                    return navigate("/")
+                }
                 const savedRecipesRaw = await fetch(`${import.meta.env.VITE_FETCH_URL}/savedrecipes/${user.id}/date`, {
                     method:"GET",
                     headers:{'Content-Type':'application/json'}
@@ -74,7 +77,6 @@ function ShowProfile(){
                 setPostedReviews(postedReviews)
 
                 setLoading(false)
-                console.log("p[lppl")
             }
         )()
     }, [])

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useOutletContext, useParams } from "react-router"
+import { useNavigate, useOutletContext, useParams } from "react-router"
 
 
 function CreateRecipe(){
@@ -17,6 +17,18 @@ function CreateRecipe(){
     const [showAddIngField, setShowAddIngField] = useState(false)
     const [showAddInstField, setShowAddInstField] = useState(false)
     const [file, setFile] = useState("")
+    const navigate =  useNavigate()
+
+    useEffect(()=>{
+        (
+            async ()=>{
+                if (!user.username){
+                    return navigate("/")
+                }
+                setLoading(false)
+            }
+        )()
+    }, [])
 
     function handleInstState(e){
         e.preventDefault()
@@ -79,6 +91,10 @@ function CreateRecipe(){
             body:formData
         })
         }
+    }
+
+    if (loading){
+        return <h1>Loading...</h1>
     }
 
     return <div className="createrecipe-container">

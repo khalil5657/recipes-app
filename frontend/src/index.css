@@ -123,7 +123,7 @@ nav{
   display: flex;
   gap: 10px;
 }
-.navlog .l:first-child{
+.navlog .l:first-child, .burger-navlog .l:first-child{
   background-color: white;
   color: blue;
   padding: 7px;
@@ -131,7 +131,7 @@ nav{
   text-decoration: none;
     transition: all 0.5s;
 }
-.navlog .l:nth-child(2){
+.navlog .l:nth-child(2), .burger-navlog .l:nth-child(2){
   background-color: blue;
   color: white;
   padding: 7px;
@@ -139,7 +139,7 @@ nav{
   text-decoration: none;
   transition: all 0.5s;
 }
-.navlog .l:hover{
+.navlog .l:hover, .burger-navlog .l:hover{
   transform: scale(1.1);
 }
 
@@ -716,4 +716,106 @@ li{
 }
 .showprofile .recipes{
   padding: 20px 60px;
+}
+.burger-container{
+  height: 100%;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.burger{
+  height: 28px;
+  width: 28px;
+  display: none;
+  z-index: 10;
+}
+
+.sidebar{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  width: 200px;
+  background-color: orange;
+  padding: 15px;
+  padding-top: 50px;
+  font-size: 1.3rem;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+
+}
+
+@-webkit-keyframes fadeIn {
+  from {transform: translateX(-200px);} 
+  to {transform: translateX(0);}
+}
+
+@keyframes fadeIn {
+  from {transform: translateX(-200px);} 
+  to {transform: translateX(0);}
+}
+
+.burger-categories{
+  color: white;
+  font-weight: bold;
+}
+.burger-catitems .Link{
+  color: white;
+  display: block;
+  padding: 4px;
+  border: 1px solid white;
+}
+.burger-catitems .Link:hover{
+  opacity: 0.7;
+}
+.burger-navlog{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 25px;
+  left: 20px;
+  right: 20px;
+}
+
+@media screen and (max-width:1000px) {
+  .homerecipes{
+    grid-template-columns: 1fr 1fr;
+    row-gap: 20px;
+  }
+  .home{
+    height: max-content;
+    padding: 25px 0;
+  }
+}
+@media screen and (max-width:720px) {
+  .homerecipes{
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+  }
+  .homerecipes .recipe{
+    height: 400px;
+    grid-template-rows: 80px 240px 80px;
+    font-size: 1.3rem;
+  }
+  
+  .navhome{
+    display: none;
+  }
+  .burger{
+    display: block;
+  }
+  .categories{
+    display: none;
+  }
+  
+}
+
+@media screen and (max-width:520px) {
+  .navlog{
+    display: none;
+  }
+  
 }

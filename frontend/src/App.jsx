@@ -12,11 +12,13 @@ import ShowProfile from './showprofile'
 import ShowSearchResults from './searchresults'
 import EditRecipe from './editrecipe'
 
+
 function RootLayout(){
   const [user, setUser] = useState("")
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   const [searchValue, setSearchValue] = useState("")
+  const [showBurger, setShowBurger] = useState(false)
 
   useEffect(()=>{
     (
@@ -46,12 +48,41 @@ function RootLayout(){
     return navigate("/")
   }
 
+  function handleBurger(){
+    if (showBurger==true){
+      setShowBurger(false)
+    }else{
+      setShowBurger(true)
+    }
+  }
+
   if (loading){
     return <h1>Loading...</h1>
   }
   return <div>
           <nav>
-            <Link className='navhome'>Home</Link>
+            <div className="burger-container">
+              <Link className='navhome'>Home</Link>
+              <img src='burger-menu-svgrepo-com.svg' className='burger' onClick={()=>handleBurger()}/>
+            </div>
+
+            {showBurger==true&&
+                  <div className='sidebar'>
+                      <Link className='Link'>Home</Link>
+                      <div className='burger-categories' >
+                        categories
+                        <div className="burger-catitems">
+                          <Link className='Link' to="/showcategory/pizza">Pizza</Link>
+                          <Link className='Link' to="/showcategory/burger">Burger</Link>
+                          <Link className='Link' to="/showcategory/soup">Soup</Link>
+                          <Link className='Link' to="/showcategory/sea food">Sea food</Link>
+                          <Link className='Link' to="/showcategory/pasta&noodles">Pasta/Noodles</Link>
+                        </div>
+                      </div>
+                      {!user&&<div className="burger-navlog"><Link className='l' to="/login">Login</Link><Link className='l' to="/signup">Signup</Link></div>}
+                  </div>
+                  }
+
             <div className='categories' >
               categories
               <div className="catitems">

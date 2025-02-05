@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useLocation, useOutletContext, useParams } from "react-router"
+import { useLocation, useNavigate, useOutletContext, useParams } from "react-router"
 
 
 function EditRecipe(){
@@ -30,6 +30,19 @@ function EditRecipe(){
 
     const [oldImgUrl, setOldImgUrl] = useState(state?state.recipe.img.url:"")
     const [file, setFile] = useState("")
+
+    const navigate =  useNavigate()
+
+    useEffect(()=>{
+        (
+            async ()=>{
+                if (!user.username){
+                    return navigate("/")
+                }
+                setLoading(false)
+            }
+        )()
+    }, [])
 
     function handleSetFile(value){
         setFile(value)
@@ -160,6 +173,10 @@ function EditRecipe(){
                     {showEditInsField==index&&<div><input value={instruction} onChange={(e)=>setInstruction(e.target.value)}/><button type="button" onClick={()=>updateIt(index)}>Update</button></div>}
                 </li>
 
+    }
+
+    if (loading){
+        return <h1>Loading...</h1>
     }
 
     return <div className="editrecipe-container">
