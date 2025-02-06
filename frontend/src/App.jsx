@@ -69,6 +69,14 @@ function RootLayout(){
             {showBurger==true&&
                   <div className='sidebar'>
                       <Link className='Link'>Home</Link>
+                      {user&&<div className='burger-navuser'>
+                        <Link className='Link' to="/showprofile">
+                          {user.img?<img src={user.img.url} className='profile-img'/>:<img src='https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg' className='profile-img'/>}
+                          <div>{user.username}{user.id=="a123170a-59c4-412f-b803-ddb539deb658"&&<div className='admin'>Admin</div>}</div>
+                        </Link>
+                        <button onClick={logOut}>Logout</button>
+                      </div>
+                      }
                       <div className='burger-categories' >
                         categories
                         <div className="burger-catitems">
@@ -82,7 +90,7 @@ function RootLayout(){
                       {!user&&<div className="burger-navlog"><Link className='l' to="/login">Login</Link><Link className='l' to="/signup">Signup</Link></div>}
                   </div>
                   }
-
+      
             <div className='categories' >
               categories
               <div className="catitems">
