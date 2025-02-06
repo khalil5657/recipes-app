@@ -104,7 +104,7 @@ function CreateRecipe(){
                 <label htmlFor="">description</label>
                 <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)} rows={8} required></textarea>
                 <label htmlFor="">image</label>
-                <input type="file" name="picture" onChange={(e)=>setFile(e.target.files[0])} />
+                <input type="file" name="picture" onChange={(e)=>setFile(e.target.files[0])} required/>
                 <label htmlFor="">ingredients: </label>
                 <ul>{listOfIngredients.map(item=><li>{item}</li>)}</ul>
                 <button onClick={(e)=>handleState(e)} className="adding">Add Ingredient</button>

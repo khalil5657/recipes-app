@@ -950,3 +950,23 @@ li{
     display: flex;
   }
 }
+.message{
+  width: 20vw;
+  height: 8vh;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgb(11, 186, 255);
+  color: white;
+  /* transform: translateY(100px); */
+   animation: messageFadeIn 1s;
+   padding: 8px;
+   font-size: 1.1rem;
+   font-family: Arial, Helvetica, sans-serif;
+   border-radius: 10px;
+}
+
+@keyframes messageFadeIn {
+  from {transform: translateY(100px);} 
+  to {transform: translateY(0);}
+}

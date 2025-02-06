@@ -187,7 +187,7 @@ function EditRecipe(){
                 <label htmlFor="">description</label>
                 <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)} rows={8} required></textarea>
                 <label htmlFor="">image</label>
-                <input type="file" name="picture" onChange={(e)=>handleSetFile(e.target.files[0])}/>
+                <input type="file" name="picture" onChange={(e)=>handleSetFile(e.target.files[0])} required/>
                 <label htmlFor="">ingredients: </label>
                 {listOfIngredients.map((item, index)=><div>{listIngr(item, index)} </div>)}
                 <button onClick={(e)=>handleState(e)}className="adding">Add Ingredient</button>

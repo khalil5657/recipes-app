@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate, useOutletContext, useParams } from "react-router"
 
 function ShowRecipe(){
-    const [user, setUser] = useOutletContext()
+    const [user, setUser, setMessageContent, showMessage] = useOutletContext()
     const {type, id } = useParams()
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState("")
@@ -119,6 +119,8 @@ function ShowRecipe(){
                   })
             })
             setUpdate({})
+            setMessageContent("Review Deleted Succesfully")
+            showMessage(true)
         }
 
     function showReview(review, index, recipe){
@@ -173,6 +175,8 @@ function ShowRecipe(){
                 })
                 setEditReviewField('n')
                 setUpdate({})
+                setMessageContent("Review Updated Succesfully")
+                showMessage(true)
             }
 
             return <div className="review-container">
@@ -246,6 +250,8 @@ function ShowRecipe(){
         })
         setShowReviewFormState(false)
         setUpdate({})
+        setMessageContent("Review Added Succesfully")
+        showMessage(true)
     }
     if (loading){
         return <h1>Loading...</h1>
@@ -257,6 +263,8 @@ function ShowRecipe(){
             method:"DELETE",
             headers:{"Content-Type":"application/json"},
         })
+        setMessageContent("Recipe Deleted Succesfully")
+        showMessage(true)
         return navigate("/")
     }
 

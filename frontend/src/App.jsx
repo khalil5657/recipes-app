@@ -19,6 +19,8 @@ function RootLayout(){
   const navigate = useNavigate()
   const [searchValue, setSearchValue] = useState("")
   const [showBurger, setShowBurger] = useState(false)
+  const [message, setMessage]= useState(false)
+  const [messageContent, setMessageContent] = useState("")
 
   useEffect(()=>{
     (
@@ -46,6 +48,13 @@ function RootLayout(){
     })
     setUser("")
     return navigate("/")
+  }
+
+  function showMessage(){
+    setMessage(true)
+      setTimeout(() => {
+        setMessage(false)
+      }, 3000);
   }
 
   function handleBurger(){
@@ -102,7 +111,6 @@ function RootLayout(){
               </div>
             </div>
             <div className="navsearch">
-          
               <input type="text" placeholder='search' value={searchValue} onChange={(e)=>setSearchValue(e.target.value)} required/>
               <Link className='Link' to="/searchresults" state={{value:searchValue.trim()}}>Search</Link>
             </div>
@@ -117,7 +125,8 @@ function RootLayout(){
                     </div>
             }
           </nav>
-          <Outlet context={[user, setUser]}/>
+           {message==true&&<div className='message'>{messageContent}</div>}
+          <Outlet context={[user, setUser, setMessageContent, showMessage ]}/>
       </div>
 }
 
