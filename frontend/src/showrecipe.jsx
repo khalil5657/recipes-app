@@ -166,8 +166,8 @@ function ShowRecipe(){
                     headers:{"Content-Type":"application/json"},
                     body:JSON.stringify({
                         recipeid:recipe.id,
-                        title:editTitle,
-                        description:editDescription,
+                        title:editTitle.trim(),
+                        description:editDescription.trim(),
                         rating:editStarsFinal
                     })
                 })
@@ -194,9 +194,9 @@ function ShowRecipe(){
                     :<div>
                         <form action="" onSubmit={updateReview} className="editreviewform"> 
                             <label>Review Title:</label>
-                            <input type="text" value={editTitle} onChange={(e)=>setEditTitle(e.target.value)}/>
+                            <input type="text" value={editTitle} onChange={(e)=>setEditTitle(e.target.value)} required/>
                             <label htmlFor="">Review Description: </label>
-                            <textarea name="" id="" value={editDescription} onChange={(e)=>setEditDescription(e.target.value)} rows={8} cols={25}></textarea>
+                            <textarea name="" id="" value={editDescription} onChange={(e)=>setEditDescription(e.target.value)} rows={8} cols={25} required></textarea>
                             <label htmlFor="">Rating</label>
                             <div className="stars">
                                 <div onMouseEnter={()=>handleEditStars(1)} onMouseLeave={()=>handleEditStars(0)} onClick={()=>handleEditFinalStars(1)} className={editStars>=1?"fa fa-star checked":'fa fa-star'}></div>
@@ -237,8 +237,8 @@ function ShowRecipe(){
             method:"POST",
             headers:{'Content-Type': 'application/json'},
             body: JSON.stringify({
-                title:reviewTitle,
-                description:reviewDescription,
+                title:reviewTitle.trim(),
+                description:reviewDescription.trim(),
                 rating:starsFinal,
                 writerid:user.id,
                 recipeid:data.id
@@ -266,9 +266,9 @@ function ShowRecipe(){
             {showReviewFormState&&
             <form onSubmit={sendReview} className="reviewform">
                 <label htmlFor="">Review Title</label>
-                <input type="text" value={reviewTitle} onChange={(e)=>setReviewTitle(e.target.value)}/>
+                <input type="text" value={reviewTitle} onChange={(e)=>setReviewTitle(e.target.value)} required/>
                 <label htmlFor="">review description</label>
-                <textarea name="" id="" value={reviewDescription} onChange={(e)=>setReviewDescription(e.target.value)} rows={8} cols={25}></textarea>
+                <textarea name="" id="" value={reviewDescription} onChange={(e)=>setReviewDescription(e.target.value)} rows={8} cols={25} required></textarea>
                 <label htmlFor="">Rating</label>
                 <div className="stars">
                     <div onMouseEnter={()=>handleSetStars(1)} onMouseLeave={()=>handleSetStars(0)} onClick={()=>handleFinalStars(1)} className={stars>=1?"fa fa-star checked":'fa fa-star'}></div>

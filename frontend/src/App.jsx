@@ -102,8 +102,9 @@ function RootLayout(){
               </div>
             </div>
             <div className="navsearch">
-              <input type="text" placeholder='search' value={searchValue} onChange={(e)=>setSearchValue(e.target.value)}/>
-              <Link className='Link' to="/searchresults" state={{value:searchValue}}>Search</Link>
+          
+              <input type="text" placeholder='search' value={searchValue} onChange={(e)=>setSearchValue(e.target.value)} required/>
+              <Link className='Link' to="/searchresults" state={{value:searchValue.trim()}}>Search</Link>
             </div>
             {!user&&<div className="navlog"><Link className='l' to="/login">Login</Link><Link className='l' to="/signup">Signup</Link></div>}
             {user&&<div className='navuser'>

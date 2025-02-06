@@ -41,8 +41,8 @@ function SignUp(){
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                username,
-                password,
+                useranme:username.trim(),
+                password:password.trim(),
               })
         })
         const data = await res.json()
@@ -65,16 +65,7 @@ function SignUp(){
         return <h1>Loading...</h1>
     }
     return <div className="signup">
-            {/* <h1>Create Account</h1> */}
-            {/* <form method="post" onSubmit={signUp} encType="multipart/form-data">
-                <label htmlFor="">Username</label>
-                <input type="text" placeholder="Call me ..." value={username} onChange={(e)=>changeUsername(e.target.value)}/>
-                <label htmlFor="">Password</label>
-                <input type="password" value={password} onChange={(e)=>changePassword(e.target.value)}/>
-                <h1>Choose Profile Picture</h1>
-                <input type="file" name="picture" onChange={(e)=>handleFile(e.target.files[0])}/>
-                <br /><button type="submit">Create</button>
-            </form>  */}
+            
             <div className="form-container">
                 <h4>We're so excited to have you join us! </h4> 
                 <h2>Sign Up</h2>
@@ -86,7 +77,7 @@ function SignUp(){
                         id="username"
                         onChange={(e)=>setUsername(e.target.value)}
                         placeholder="Enter your username"
-                        />
+                        required/>
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
@@ -95,7 +86,7 @@ function SignUp(){
                         id="password"
                         onChange={(e)=>setPassword(e.target.value)}
                         placeholder="Enter your password"
-                        />
+                        required/>
                     </div>
                     <h4>Choose Profile Picture</h4>
                     <input type="file" name="picture" onChange={(e)=>handleFile(e.target.files[0])} id="profile"/>

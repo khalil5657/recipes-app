@@ -91,8 +91,8 @@ function EditRecipe(){
             method:"PUT",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                title,
-                description,
+                title:title.trim(),
+                description:description.trim(),
                 writerid:user.id,
                 ingredients:listOfIngredients,
                 instructions:listOfInstructions,
@@ -182,10 +182,10 @@ function EditRecipe(){
     return <div className="editrecipe-container">
             <form action="" onSubmit={updateRecipe} encType="multipart/form-data">
                 <label htmlFor="">title</label>
-                <input type="text"  value={title} onChange={(e)=>setTitle(e.target.value)}/>
+                <input type="text"  value={title} onChange={(e)=>setTitle(e.target.value)} required/>
                 {oldImgUrl&&<img src={oldImgUrl}/>}
                 <label htmlFor="">description</label>
-                <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)} rows={8}></textarea>
+                <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)} rows={8} required></textarea>
                 <label htmlFor="">image</label>
                 <input type="file" name="picture" onChange={(e)=>handleSetFile(e.target.files[0])}/>
                 <label htmlFor="">ingredients: </label>
@@ -205,7 +205,7 @@ function EditRecipe(){
                                     <button onClick={(e)=>addToInstLista(e)}>add</button>
                                 </div>}
                 <label htmlFor="">Nutritius value</label>
-                <input type="text" value={nutValue} onChange={(e)=>setNutValue(e.target.value)}/>
+                <input type="number" value={nutValue} onChange={(e)=>setNutValue(e.target.value)}/>
             <button type="submit" className="addrecipebtn">Update Recipe</button>
             </form>
         </div>

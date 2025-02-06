@@ -72,8 +72,8 @@ function CreateRecipe(){
             method:"POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                title,
-                description,
+                title:title.trim(),
+                description:description.trim(),
                 writerid:user.id,
                 ingredients:listOfIngredients,
                 instructions:listOfInstructions,
@@ -100,9 +100,9 @@ function CreateRecipe(){
     return <div className="createrecipe-container">
             <form action="" onSubmit={addRecipe} encType="multipart/form-data">
                 <label htmlFor="">title</label>
-                <input type="text"  value={title} onChange={(e)=>setTitle(e.target.value)}/>
+                <input type="text"  value={title} onChange={(e)=>setTitle(e.target.value)} required/>
                 <label htmlFor="">description</label>
-                <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)} rows={8}></textarea>
+                <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)} rows={8} required></textarea>
                 <label htmlFor="">image</label>
                 <input type="file" name="picture" onChange={(e)=>setFile(e.target.files[0])} />
                 <label htmlFor="">ingredients: </label>
@@ -122,7 +122,7 @@ function CreateRecipe(){
                                     <button onClick={(e)=>addToInstLista(e)}>add</button>
                                 </div>}
                 <label htmlFor="">Nutritius value</label>
-                <input type="text" value={nutValue} onChange={(e)=>setNutValue(e.target.value)}/>
+                <input type="number" value={nutValue} onChange={(e)=>setNutValue(e.target.value)}/>
             <button type="submit" className="addrecipebtn">Add Recipe</button>
             </form>
         </div>

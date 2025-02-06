@@ -24,8 +24,8 @@ function Login(){
             headers: {'Content-Type': 'application/json'},
             credentials:"include",
             body: JSON.stringify({
-                username,
-                password,
+                username:username.trim(),
+                password:password.trim(),
               })
         })
         const loggedUser = await rawUser.json()
@@ -59,7 +59,7 @@ function Login(){
                         id="username"
                         onChange={(e)=>setUsername(e.target.value)}
                         placeholder="Enter your username"
-                        />
+                        required/>
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
@@ -68,7 +68,7 @@ function Login(){
                         id="password"
                         onChange={(e)=>setPassword(e.target.value)}
                         placeholder="Enter your password"
-                        />
+                        required/>
                     </div>
                     <br /><br />
                     <button type="submit">Log In</button>
