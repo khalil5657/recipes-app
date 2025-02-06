@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate, useOutletContext } from "react-router"
 
 function ShowProfile(){
-    const [user, setUser] = useOutletContext()
+    const [user, setUser, setMessageContent, showMessage] = useOutletContext()
     const [loading, setLoading] = useState(true)
     const [savedRecipes, setSavedRecipes] = useState([])
     const [createdRecipes, setCreatedRecipes] = useState([])

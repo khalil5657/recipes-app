@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useOutletContext } from "react-router"
 
 function SignUp(){
-    const [user, setUser] = useOutletContext()
+    const [user, setUser, setMessageContent, showMessage] = useOutletContext()
     const [file, setFile] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -58,6 +58,8 @@ function SignUp(){
         }
 
         if (data.username){
+            setMessageContent("Review Added Succesfully")
+            showMessage(true)
             return navigate("/login")
         }
     }

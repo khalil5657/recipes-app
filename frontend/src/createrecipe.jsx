@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext, useParams } from "react-router"
 
 
 function CreateRecipe(){
-    const [user, setUser] = useOutletContext()
+    const [user, setUser, setMessageContent, showMessage] = useOutletContext()
     const {type } = useParams()
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState("")
@@ -91,6 +91,8 @@ function CreateRecipe(){
             body:formData
         })
         }
+        setMessageContent("Recipe Created Succesfully")
+        showMessage(true)
     }
 
     if (loading){

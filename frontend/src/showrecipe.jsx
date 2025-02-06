@@ -36,7 +36,7 @@ function ShowRecipe(){
                 setLoading(false)
             }
         )()
-    }, [type, update])
+    }, [ update])
 
     function handleShowForm(e){
         e.preventDefault()

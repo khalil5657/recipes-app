@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useOutletContext, useParams } from "react-rou
 
 
 function EditRecipe(){
-    const [user, setUser] = useOutletContext()
+    const [user, setUser, setMessageContent, showMessage] = useOutletContext()
     const {id} = useParams()
     const {state} = useLocation()
     const [loading, setLoading] = useState(true)
@@ -110,6 +110,8 @@ function EditRecipe(){
             body:formData
         })
         }
+        setMessageContent("Recipe Updated Succesfully")
+        showMessage(true)
     }
 
     function listIngr(item, index){

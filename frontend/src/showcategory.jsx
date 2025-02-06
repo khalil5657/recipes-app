@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useOutletContext, useParams } from "react-router"
 
 function ShowCategory(){
-    const [user, setUser] = useOutletContext()
+    const [user, setUser, setMessageContent, showMessage] = useOutletContext()
     const {type } = useParams()
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState("")

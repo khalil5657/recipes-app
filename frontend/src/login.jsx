@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useNavigate, useOutletContext } from "react-router"
 
 function Login(){
-    const [user, setUser] = useOutletContext()
+    const [user, setUser, setMessageContent, showMessage] = useOutletContext()
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(true)
