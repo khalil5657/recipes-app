@@ -693,12 +693,15 @@ li{
 .profile{
   display: flex;
   flex-direction: column;
-  width: 25%;
+  width: 50%;
+  max-width: 450px;
   height: 300px;
   margin-left: 50%;
   transform: translateX(-50%);
   /* margin-top: 80px; */
   margin-bottom: 30px;
+  border: 1px solid orange;
+  box-shadow: 3px 3px 3px rgb(74, 74, 74);
 }
 .profile img{
   height: 100%;
@@ -716,6 +719,10 @@ li{
   padding-left: 60px;
   font-size: 1.1rem;
   margin-bottom: 30px;
+}
+.showprofile h3{
+  color:  orange;
+  font-weight: bold;
 }
 .showprofile .recipes{
   padding: 20px 60px;
@@ -845,6 +852,15 @@ li{
   .categories{
     display: none;
   }
+  .showprofile h3{
+    font-size: 2rem;
+    margin-top: 70px;
+  }
+  .showprofile .sorting{
+    font-size: 1.5rem;
+  }
+
+
 }
 @media screen and (max-width:720px) {
   .homerecipes{
@@ -877,6 +893,7 @@ li{
   .recipe{
     width: 100%;
   }
+
 }
 
 @media screen and (max-width:520px) {
@@ -910,6 +927,12 @@ li{
   }
   .showrecipe{
     margin-top: 14vh;
+  }
+  .profile{
+    width: 90%;
+  }
+  .showprofile h3{
+    padding-left: 0;
   }
   
 }

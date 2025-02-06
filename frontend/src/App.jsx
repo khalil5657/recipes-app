@@ -68,7 +68,7 @@ function RootLayout(){
 
             {showBurger==true&&
                   <div className='sidebar'>
-                      <Link className='Link'>Home</Link>
+                      <Link className='Link' style={{marginTop:"50px", display:"block"}}>Home</Link>
                       {user&&<div className='burger-navuser'>
                         <Link className='Link' to="/showprofile">
                           {user.img?<img src={user.img.url} className='profile-img'/>:<img src='https://res.cloudinary.com/dlwgxdiyp/image/upload/v1730058205/d76lwdwx5ojtcdk302eb.jpg' className='profile-img'/>}
