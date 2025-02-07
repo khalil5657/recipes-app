@@ -115,7 +115,7 @@ app.post("/login", async (req, res) => {
   
       const token = jwt.sign(
         { userId: user.id, username: user.username },
-        process.env.SECRET,
+        'secret',
         // { expiresIn: '1h' }
       )
       res.cookie('jwt', token, {
@@ -138,7 +138,7 @@ app.post("/logout", (req, res)=>{
 app.get("/user", async(req, res)=>{
     try{
         const cookie = req.cookies['jwt']
-        const claims = jwt.verify(cookie, process.env.SECRET)
+        const claims = jwt.verify(cookie, 'secret')
         if (!claims){
             return res.status(404).send({message:"unauthenticated"})
         }
