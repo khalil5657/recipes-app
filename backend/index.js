@@ -27,9 +27,9 @@ const upload = multer({ dest: 'uploads/' })
 let originUrl = ""
 
 if (process.env.STATE=="dev"){
-    originUrl = "http://localhost:5173"
+    originUrl = process.env.DEV_DATABASE_URL
 }else{
-    originUrl = "https://howtorecipe.netlify.app"
+    originUrl = process.env.PROD_DATABASE_URL
 }
 
 app.use(cors({
