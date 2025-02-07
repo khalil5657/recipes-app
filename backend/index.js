@@ -131,7 +131,11 @@ app.post("/login", async (req, res) => {
 })
 
 app.post("/logout", (req, res)=>{
-    res.cookie("jwt", "", {maxAge:0})
+    res.cookie("jwt", "", {
+                maxAge:0, httpOnly:true,
+                sameSite:"none",
+                secure:true}
+            )
     res.send({message:"secsess"})
 })
 //// cookie stays on the page url or origin cokkies in the browser
