@@ -41,7 +41,7 @@ function SignUp(){
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                useranme:username.trim(),
+                username:username.trim(),
                 password:password.trim(),
               })
         })

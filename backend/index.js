@@ -375,7 +375,7 @@ app.get("/recipes", async(req, res)=>{
         }
     })
     const recipes = []
-    if (recipes.length>0){
+    if (recipesRaw.length>0){
 
     
     while (recipes.length<4){
