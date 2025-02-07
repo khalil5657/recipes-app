@@ -24,7 +24,13 @@ const cloudinary = require('cloudinary').v2
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
-let originUrl = "http://localhost:5173"
+let originUrl = ""
+
+if (process.env.STATE=="dev"){
+    originUrl = "http://localhost:5173"
+}else{
+    originUrl = ""
+}
 
 app.use(cors({
     origin: originUrl,
@@ -109,7 +115,7 @@ app.post("/login", async (req, res) => {
   
       const token = jwt.sign(
         { userId: user.id, username: user.username },
-        'bigsecret',
+        process.env.SECRET,
         // { expiresIn: '1h' }
       )
       res.cookie('jwt', token, {
@@ -132,7 +138,7 @@ app.post("/logout", (req, res)=>{
 app.get("/user", async(req, res)=>{
     try{
         const cookie = req.cookies['jwt']
-        const claims = jwt.verify(cookie, "bigsecret")
+        const claims = jwt.verify(cookie, process.env.SECRET)
         if (!claims){
             return res.status(404).send({message:"unauthenticated"})
         }
