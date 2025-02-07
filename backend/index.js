@@ -27,9 +27,9 @@ const upload = multer({ dest: 'uploads/' })
 let originUrl = ""
 
 if (process.env.STATE=="dev"){
-    originUrl = process.env.DEV_DATABASE_URL
+    originUrl = process.env.DEV_URL
 }else{
-    originUrl = process.env.PROD_DATABASE_URL
+    originUrl = process.env.PROD_URL
 }
 
 app.use(cors({
