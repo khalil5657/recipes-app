@@ -29,7 +29,7 @@ let originUrl = ""
 if (process.env.STATE=="dev"){
     originUrl = "http://localhost:5173"
 }else{
-    originUrl = ""
+    originUrl = "https://howtorecipe.netlify.app"
 }
 
 app.use(cors({
