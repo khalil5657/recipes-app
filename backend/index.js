@@ -375,6 +375,9 @@ app.get("/recipes", async(req, res)=>{
         }
     })
     const recipes = []
+    if (recipes.length>0){
+
+    
     while (recipes.length<4){
         let times = 0
         const randomElement = recipesRaw[Math.floor(Math.random() * recipesRaw.length)];
@@ -386,6 +389,7 @@ app.get("/recipes", async(req, res)=>{
         if (times==0){
             recipes.push(randomElement)
         }
+    }
     }
     res.send(recipes)
 })
