@@ -77,7 +77,7 @@ function SignUp(){
                         <input
                         type="text"
                         id="username"
-                        onChange={(e)=>setUsername(e.target.value)}
+                        onChange={(e)=>changeUsername(e.target.value)}
                         placeholder="Enter your username"
                         required/>
                     </div>
@@ -86,7 +86,7 @@ function SignUp(){
                         <input
                         type="password"
                         id="password"
-                        onChange={(e)=>setPassword(e.target.value)}
+                        onChange={(e)=>changePassword(e.target.value)}
                         placeholder="Enter your password"
                         required/>
                     </div>
