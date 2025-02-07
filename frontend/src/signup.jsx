@@ -58,7 +58,7 @@ function SignUp(){
         }
 
         if (data.username){
-            setMessageContent("Review Added Succesfully")
+            setMessageContent("User Created Succesfully")
             showMessage(true)
             return navigate("/login")
         }
