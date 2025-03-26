@@ -73,3 +73,8 @@ model Review {
   recipe Recipe @relation(fields: [recipeid], references: [id])
   recipeid String
 }
+
+model Test {
+  id String @id @default(uuid())
+  content String
+}
