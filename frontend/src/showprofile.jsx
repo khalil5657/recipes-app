@@ -134,7 +134,7 @@ function ShowProfile(){
     }
 
     if (loading){
-        return <h1>Loading...</h1>
+        return <h1 className="loading">Loading...</h1>
     }
 
     return <div className="showprofile" style={{padding:"60px"}}>
